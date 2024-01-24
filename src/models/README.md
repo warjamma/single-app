@@ -1,1 +1,1 @@
-<!--  model type general and reusable -->
+Model type for general and reusable

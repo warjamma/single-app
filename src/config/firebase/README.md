@@ -1,1 +1,1 @@
-<!-- firebase -->
+Firebase root config

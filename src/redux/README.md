@@ -1,1 +1,1 @@
-<!-- slice app pages or feature -->
+Slice redux toolkit app pages or feature

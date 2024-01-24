@@ -1,1 +1,1 @@
-<!-- root store redux -->
+Root store redux
