@@ -15,19 +15,8 @@
     "isolatedModules": true,
     "noEmit": true,
     "jsx": "react-jsx",
-    "baseUrl": "./src",
-    "paths": {
-      "@components/*": ["components/*"],
-      "@pages/*": ["pages/*"],
-      "@assets/*": ["assets/*"],
-      "@config/*": ["config/*"],
-      "@constants/*": ["constants/*"],
-      "@redux/*": ["redux/*"],
-      "@utility/*": ["utility/*"],
-      "@services/*": ["services/*"],
-      "@models/*": ["models/*"],
-      "@layouts/*": ["layouts/*"],
-    }
+
   },
-  "include": ["src"]
+  "include": ["src"],
+  "extends": "./tsconfig.paths.json",
 }
