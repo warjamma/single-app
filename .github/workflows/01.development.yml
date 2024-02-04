@@ -13,9 +13,9 @@ env:
   IMAGE: cab-client
   OVERLAY_DIR: ./k8s/overlays/development
   INGRESS_IP: 35.186.147.166
-  PERSONAL_TOTO_CDN: 'https://storage.googleapis.com/ttcdn/anto6/v1/'
+  PERSONAL_TOTO_CDN: 'https://storage.googleapis.com/ttcdn/'
   COMMON_TOTO_CDN: 'https://storage.googleapis.com/ttcdn/common/v1/'
-  PUBLIC_CDN: 'https://storage.googleapis.com/public-bingo8-development/adminUpload/'
+  PUBLIC_CDN: 'https://storage.googleapis.com/'
   DOT_ENV_FILE_NAME: .env.develop
 jobs:
   variables:
