@@ -21,30 +21,6 @@ server {
   location / {
     try_files \$uri \$uri/ /index.html =404;
   }
-
-  location /assets/common/ {
-    proxy_pass $3;
-  }
-
-  location /assets/public/ {
-    proxy_pass $4;
-  }
-
-  location /assets/ {
-    proxy_pass $2;
-  }
-
-  location /cdn/common/ {
-    proxy_pass $3;
-  }
-
-  location /cdn/public/ {
-    proxy_pass $4;
-  }
-
-  location /cdn/ {
-    proxy_pass $2;
-  }
   
   location ~ ^/(v1|account|payment)/ {
     proxy_set_header EL-Real-IP \$http_cf_connecting_ip;
