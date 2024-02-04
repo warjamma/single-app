@@ -1,6 +1,7 @@
 import { orchestrator } from 'satcheljs';
 import { updateRegisterUrlAction } from '../action';
-import { CONFIGURATION } from '@constants/index';
+import { CONFIGURATION } from '../../../constants';
+
 import { LocalStorageService } from "../../../configuration/local-storage";
 
 orchestrator(updateRegisterUrlAction, ({ url }) => {

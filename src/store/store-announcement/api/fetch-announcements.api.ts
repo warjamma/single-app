@@ -1,6 +1,6 @@
 import { API } from '../../../api';
+import { IBaseSearchResponse } from '../../../utils';
 import { IAnnouncementModel } from '../store';
-import { IBaseSearchResponse } from 'utils/hooks';
 
 export const fetchAnnouncementsAPI = (): Promise<IAnnouncementModel[]> => {
   return new Promise((resolve, reject) => {

@@ -1,4 +1,4 @@
-import { ILoginPageContent } from "@models/login-page-content.model";
+import { ILoginPageContent } from "../../models";
 
 export const registerContent: ILoginPageContent=  {
   logo:"",

@@ -1,6 +1,6 @@
 import React from "react";
 import ReactDOM from "react-dom/client";
-import "@assets/styles/global/global.scss";
+import "./assets/styles/global/global.scss";
 import reportWebVitals from "./reportWebVitals";
 import Root from './root.component';
 // import { PersistGate } from "redux-persist/integration/react";

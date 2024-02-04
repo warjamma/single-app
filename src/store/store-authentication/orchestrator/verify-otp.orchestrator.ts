@@ -5,7 +5,8 @@ import { CoreUserProfileStore } from '../../store-user-profile';
 import { verifyOtpAction, updateIsMustVerifyPhoneAction, updatePhoneNumberAction } from '../action';
 import { idOtpSelector } from '../selector';
 import { backToHome } from '../util';
-import { CONFIGURATION } from '@constants/index';
+import { CONFIGURATION } from '../../../constants';
+
 import { verifyOtp } from '../../../api';
 import { ITranslatorParams } from '../../../configuration/language';
 

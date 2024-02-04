@@ -1,4 +1,5 @@
-import { CONFIGURATION } from '@constants/index';
+import { CONFIGURATION } from '../../../constants';
+
 import { AppHistory } from '../../store-router-manager';
 
 export const goToVerifyPhone = (delay?: number) => {

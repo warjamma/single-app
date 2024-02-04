@@ -1,4 +1,5 @@
-import { CONFIGURATION } from '@constants/index';
+import { CONFIGURATION } from '../../../constants';
+
 import { systemConfigSelector } from './system-config.selector';
 
 export const languagesSelector = () => {

@@ -1,7 +1,8 @@
 import { observable } from 'mobx';
 import { createStore } from 'satcheljs';
 import { IAuthenticationStore } from './authentication.type';
-import { CONFIGURATION } from '@constants/index';
+import { CONFIGURATION } from '../../../constants';
+
 import { LocalStorageService } from "../../../configuration/local-storage";
 
 const initStore: IAuthenticationStore = {

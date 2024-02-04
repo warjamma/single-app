@@ -2,7 +2,7 @@ import { orchestrator } from 'satcheljs';
 import { LocalStorageService } from "../../../configuration/local-storage";
 import { updateContentAction } from '../actions';
 import { getStore } from '../store';
-import { CONFIGURATION } from '@constants/index';
+import { CONFIGURATION } from '../../../constants';
 
 orchestrator(updateContentAction, ({ contentId, version, storeLocal }) => {
   if (storeLocal === false || version == null) return;

@@ -1,5 +1,5 @@
 import axios from "axios";
-import localStorageService from "@services/localStorage";
+import localStorageService from "../localStorage";
 
 // use url from .env file
 const baseURL = "URL";

@@ -1,6 +1,7 @@
 import { orchestrator } from 'satcheljs';
 import { updateIdTokenAction } from '../action';
-import { CONFIGURATION } from '@constants/index';
+import { CONFIGURATION } from '../../../constants';
+
 import { LocalStorageService } from "../../../configuration/local-storage";
 
 orchestrator(updateIdTokenAction, ({ idToken }) => {
