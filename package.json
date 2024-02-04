@@ -44,19 +44,21 @@
     "sort-by": "^1.2.0",
     "typescript": "^4.9.5",
     "web-vitals": "^2.1.4",
-    "yup": "^1.3.3"
+    "yup": "^1.3.3",
+    "sass": "^1.70.0",
+    "tailwindcss": "^3.4.1"
   },
   "scripts": {
-    "start": "craco start",
-    "build": "craco build",
-    "test": "craco test",
-    "eject": "craco eject"
+     "start": "react-scripts start",
+    "build": "DISABLE_ESLINT_PLUGIN=true NODE_OPTIONS=\"--max-old-space-size=9192\" react-scripts build",
+    "test": "react-scripts test",
+    "eject": "react-scripts eject",
+    "lint": "eslint --ext .tsx,.ts src/",
+    "lint-fix": "eslint --ext .tsx,.ts src/ --fix"
   },
   "eslintConfig": {
     "extends": [
-      "react-app",
-      "react-app/jest"
-    ]
+      "react-app"    ]
   },
   "browserslist": {
     "production": [
@@ -75,8 +77,17 @@
     "@hookform/resolvers": "^3.3.4",
     "@tailwindcss/typography": "^0.5.10",
     "@types/lodash": "^4.14.202",
+    "@typescript-eslint/eslint-plugin": "^4.28.1",
+    "@typescript-eslint/eslint-plugin-tslint": "^4.28.1",
+    "@typescript-eslint/parser": "^4.28.1",
+    "eslint-config-prettier": "^7.1.0",
+    "eslint-plugin-jsx-a11y": "^6.4.1",
+    "eslint-plugin-prettier": "^3.3.1",
+    "eslint-plugin-react": "^7.22.0",
+    "eslint-plugin-react-hooks": "^4.2.0",
+    "eslint-plugin-unused-imports": "^1.0.1",
+    "prettier": "^2.2.1",
     "craco-alias": "^3.0.1",
-    "sass": "^1.70.0",
-    "tailwindcss": "^3.4.1"
+    "source-map-explorer": "^2.5.2"
   }
 }
