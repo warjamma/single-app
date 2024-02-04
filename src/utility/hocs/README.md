@@ -1,1 +1,0 @@
-<!-- custom higher order component -->

@@ -1,1 +1,0 @@
-Model type for general and reusable
