@@ -1,4 +1,4 @@
-import { EDayOfWeek } from "@models/day-of-week.model";
+import { EDayOfWeek } from "../../../models/day-of-week.model";
 
 export const dayToDayOfWeek = (day: number) => {
   switch (day) {

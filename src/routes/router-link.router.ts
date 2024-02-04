@@ -1,10 +1,6 @@
-import { GatePage } from "@pages/gate";
-import { HomePage } from "@pages/home";
-import { LoginPage } from "@pages/login";
-import { NotFoundPage } from "@pages/not-found";
-import { ProfilePage } from "@pages/profile";
-import { RegisterPage } from "@pages/register";
+
 import { createBrowserRouter } from "react-router-dom";
+import { HomePage, LoginPage, RegisterPage, ProfilePage, GatePage, NotFoundPage } from "../pages";
 
 /* your routes here */
 export const RouterLinks = createBrowserRouter([

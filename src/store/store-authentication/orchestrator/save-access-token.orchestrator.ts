@@ -1,6 +1,7 @@
 import { orchestrator } from 'satcheljs';
 import { updateAccessTokenAction } from '../action';
-import { CONFIGURATION } from '@constants/index';
+import { CONFIGURATION } from '../../../constants';
+
 import { setApiAccessToken } from '../../../api';
 import { LocalStorageService } from "../../../configuration/local-storage";
 

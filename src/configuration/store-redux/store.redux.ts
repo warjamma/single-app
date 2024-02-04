@@ -10,8 +10,8 @@ import {
   persistReducer,
   persistStore,
 } from "redux-persist";
-import PagesReducer from "@redux/pages/slice";
-import FeaturesReducer from "@redux/features/slice";
+import PagesReducer from "../../redux/pages/slice";
+import FeaturesReducer from "../../redux/features/slice";
 
 // root config persist
 const persistConfig = {

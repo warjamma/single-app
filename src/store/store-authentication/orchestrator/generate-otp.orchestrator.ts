@@ -3,7 +3,8 @@ import { CommonMessageStore } from '../../store-common-message';
 import { CoreLoadingStore } from '../../store-loading';
 import { generateOtpAction, updatePhoneNumberAction } from '../action';
 import { updateIdOtpAction, updateTimeRegenerateOtpAction } from '../mutator-action';
-import { CONFIGURATION } from '@constants/index';
+import { CONFIGURATION } from '../../../constants';
+
 import { generateOtp2 } from '../../../api';
 import dayjs from 'dayjs';
 import { mergePhoneNumber } from '../../../utils';
