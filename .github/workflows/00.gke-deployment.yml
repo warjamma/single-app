@@ -1,0 +1,123 @@
+name: 00.gke-deployment
+on:
+  workflow_call:
+    inputs:
+      GKE_CLUSTER:
+        required: true
+        type: string
+      GKE_ZONE:
+        required: true
+        type: string
+      DEPLOYMENT_NAME:
+        required: true
+        type: string
+      IMAGE:
+        required: true
+        type: string
+      OVERLAY_DIR:
+        required: true
+        type: string
+      INGRESS_IP:
+        required: true
+        type: string
+      PERSONAL_TOTO_CDN:
+        required: true
+        type: string
+      COMMON_TOTO_CDN:
+        required: true
+        type: string
+      PUBLIC_CDN:
+        required: true
+        type: string
+      DOT_ENV_FILE_NAME:
+        required: true
+        type: string
+    secrets:
+      SA_KEY:
+        required: true
+env:
+  GKE_CLUSTER: ${{ inputs.GKE_CLUSTER }}
+  GKE_ZONE: ${{ inputs.GKE_ZONE }}
+  DEPLOYMENT_NAME: ${{ inputs.DEPLOYMENT_NAME }}
+  IMAGE: ${{ inputs.IMAGE }}
+  OVERLAY_DIR: ${{ inputs.OVERLAY_DIR }}
+  INGRESS_IP: ${{ inputs.INGRESS_IP }}
+  PERSONAL_TOTO_CDN: ${{ inputs.PERSONAL_TOTO_CDN }}
+  COMMON_TOTO_CDN: ${{ inputs.COMMON_TOTO_CDN }}
+  PUBLIC_CDN: ${{ inputs.PUBLIC_CDN }}
+  DOT_ENV_FILE_NAME: ${{ inputs.DOT_ENV_FILE_NAME }}
+  SA_KEY: ${{ secrets.SA_KEY }}
+jobs:
+  setup-build-publish-deploy:
+    name: Setup, Build, Publish, and Deploy
+    runs-on: ubuntu-latest
+    strategy:
+      matrix:
+        node-version: [12.x]
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v2
+      - name: Use Node.js ${{ matrix.node-version }}
+        uses: actions/setup-node@v1
+        with:
+          node-version: ${{ matrix.node-version }}
+      - name: Prepare dotenv
+        run: rm -rf .env && mv $DOT_ENV_FILE_NAME .env
+      - name: Install Yarn
+        run: npm install yarn -g
+      - name: Install Packages
+        run: yarn
+      - name: Build page
+        run: yarn build
+      - name: Grant execute permission for nginx
+        run: chmod +x ./deploy/*
+      - name: Create nginx folder
+        run: mkdir ./nginx && mkdir ./nginx/conf.d
+      - name: Generate default nginx configuration file setting
+        run: ./deploy/nginx.default.conf.sh "$INGRESS_IP" "$PERSONAL_TOTO_CDN" "$COMMON_TOTO_CDN" "$PUBLIC_CDN" > ./nginx/conf.d/default.conf
+      - name: Generate nginx configuration file setting
+        run: ./deploy/nginx.conf.sh > ./nginx/nginx.conf
+      # Auth gcloud
+      - id: 'auth'
+        uses: 'google-github-actions/auth@v1'
+        with:
+          credentials_json: '${{ env.SA_KEY }}'
+      # Setup gcloud CLI
+      - name: 'Set up Cloud SDK'
+        uses: 'google-github-actions/setup-gcloud@v1'
+      # Configure Docker to use the gcloud command-line tool as a credential
+      # helper for authentication
+      - run: |-
+          gcloud --quiet auth configure-docker
+      # Get the GKE credentials so we can deploy to the cluster
+      - run: |-
+          gcloud components install gke-gcloud-auth-plugin
+          export USE_GKE_GCLOUD_AUTH_PLUGIN=True
+          source ~/.bashrc
+          gcloud container clusters get-credentials "$GKE_CLUSTER" --zone "$GKE_ZONE"
+      # Build the Docker image
+      - name: Build
+        # working-directory: ./build/install/moges-server-game
+        run: |-
+          docker build \
+            --tag "gcr.io/$GCLOUD_PROJECT/$IMAGE:$GITHUB_SHA" \
+            --build-arg GITHUB_SHA="$GITHUB_SHA" \
+            --build-arg GITHUB_REF="$GITHUB_REF" \
+            .
+      # Push the Docker image to Google Container Registry
+      - name: Publish
+        run: |-
+          docker push "gcr.io/$GCLOUD_PROJECT/$IMAGE:$GITHUB_SHA"
+      # Set up kustomize
+      - name: Set up Kustomize
+        run: |-
+          curl -sfLo kustomize https://github.com/kubernetes-sigs/kustomize/releases/download/v3.1.0/kustomize_3.1.0_linux_amd64
+          chmod u+x ./kustomize
+      # Deploy the Docker image to the GKE cluster
+      - name: Deploy
+        run: |-
+          cd $OVERLAY_DIR
+          ../../../kustomize edit set image gcr.io/PROJECT_ID/IMAGE:TAG=gcr.io/$GCLOUD_PROJECT/$IMAGE:$GITHUB_SHA
+          ../../../kustomize build . | kubectl apply -f -
+          kubectl rollout status deployment/$DEPLOYMENT_NAME
+          kubectl get services -o wide
