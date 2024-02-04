@@ -1,0 +1,55 @@
+name: 01.development
+on:
+  workflow_dispatch:
+    inputs:
+      confirmDeployment:
+        description: 'Confirm Deployment'
+        required: true
+env:
+  GKE_CLUSTER: dev2
+  GKE_ZONE: asia-southeast1-a
+  GKE_SA_KEY_SECRET_NAME: GKE_LOTO_SA_KEY_DEV
+  DEPLOYMENT_NAME: cab-client
+  IMAGE: cab-client
+  OVERLAY_DIR: ./k8s/overlays/development
+  INGRESS_IP: 35.186.147.166
+  PERSONAL_TOTO_CDN: 'https://storage.googleapis.com/ttcdn/anto6/v1/'
+  COMMON_TOTO_CDN: 'https://storage.googleapis.com/ttcdn/common/v1/'
+  PUBLIC_CDN: 'https://storage.googleapis.com/public-bingo8-development/adminUpload/'
+  DOT_ENV_FILE_NAME: .env.develop
+jobs:
+  variables:
+    name: setup variable
+    runs-on: ubuntu-latest
+    outputs:
+      GKE_CLUSTER: ${{ env.GKE_CLUSTER }}
+      GKE_ZONE: ${{ env.GKE_ZONE }}
+      GKE_SA_KEY_SECRET_NAME: ${{ env.GKE_SA_KEY_SECRET_NAME }}
+      DEPLOYMENT_NAME: ${{ env.DEPLOYMENT_NAME }}
+      IMAGE: ${{ env.IMAGE }}
+      OVERLAY_DIR: ${{ env.OVERLAY_DIR }}
+      INGRESS_IP: ${{ env.INGRESS_IP }}
+      PERSONAL_TOTO_CDN: ${{ env.PERSONAL_TOTO_CDN }}
+      COMMON_TOTO_CDN: ${{ env.COMMON_TOTO_CDN }}
+      PUBLIC_CDN: ${{ env.PUBLIC_CDN }}
+      DOT_ENV_FILE_NAME: ${{ env.DOT_ENV_FILE_NAME }}
+    steps:
+      - name: Echo
+        run: echo prepare variable
+  cab-client:
+    needs: variables
+    name: deploy cab-client
+    uses: ./.github/workflows/00.gke-deployment.yml
+    with:
+      GKE_CLUSTER: ${{ needs.variables.outputs.GKE_CLUSTER }}
+      GKE_ZONE: ${{ needs.variables.outputs.GKE_ZONE }}
+      DEPLOYMENT_NAME: ${{ needs.variables.outputs.DEPLOYMENT_NAME }}
+      IMAGE: ${{ needs.variables.outputs.IMAGE }}
+      OVERLAY_DIR: ${{ needs.variables.outputs.OVERLAY_DIR }}
+      INGRESS_IP: ${{ needs.variables.outputs.INGRESS_IP }}
+      PERSONAL_TOTO_CDN: ${{ needs.variables.outputs.PERSONAL_TOTO_CDN }}
+      COMMON_TOTO_CDN: ${{ needs.variables.outputs.COMMON_TOTO_CDN }}
+      PUBLIC_CDN: ${{ needs.variables.outputs.PUBLIC_CDN }}
+      DOT_ENV_FILE_NAME: ${{ needs.variables.outputs.DOT_ENV_FILE_NAME }}
+    secrets:
+      SA_KEY: ${{ secrets[needs.variables.outputs.GKE_SA_KEY_SECRET_NAME] }}

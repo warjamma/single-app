@@ -1,0 +1,18 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: cab-client
+spec:
+  selector:
+    matchLabels:
+      app: cab-client
+  template:
+    metadata:
+      labels:
+        app: cab-client
+    spec:
+      containers:
+      - name: cab-client
+        image: gcr.io/PROJECT_ID/IMAGE:TAG
+        ports:
+          - containerPort: 80
