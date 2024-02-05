@@ -1,5 +1,5 @@
-import { combineReducers } from "@reduxjs/toolkit";
-import homeReducer from "./home/slice";
+import { combineReducers } from '@reduxjs/toolkit';
+import homeReducer from './home/slice';
 
 const reducer = combineReducers({
   home: homeReducer,

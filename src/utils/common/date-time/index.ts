@@ -1,4 +1,4 @@
-import dayjs from "dayjs";
+import dayjs from 'dayjs';
 
 export function newDayjs(data: dayjs.Dayjs | string | (() => string)): dayjs.Dayjs {
   if (dayjs.isDayjs(data)) return data;

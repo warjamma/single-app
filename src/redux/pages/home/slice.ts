@@ -1,14 +1,14 @@
-import { createSlice, ActionReducerMapBuilder } from "@reduxjs/toolkit";
-import persistReducer from "redux-persist/es/persistReducer";
-import storage from "redux-persist/lib/storage";
+import { createSlice, ActionReducerMapBuilder } from '@reduxjs/toolkit';
+import persistReducer from 'redux-persist/es/persistReducer';
+import storage from 'redux-persist/lib/storage';
 
 const initialState = {
-  example: "example",
+  example: 'example',
 };
 
 const slice = createSlice({
-  name: "homepage",
-  initialState: initialState,
+  name: 'homepage',
+  initialState,
   reducers: {
     // add only sync reducer action from this slice file
   },
@@ -19,7 +19,7 @@ const slice = createSlice({
 
 // config persist home page state
 const persistConfig = {
-  key: "homepage",
+  key: 'homepage',
   storage,
   whitelist: [],
 };

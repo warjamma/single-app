@@ -5,7 +5,7 @@ import { CoreLoadingStore } from '../../store-loading';
 import { registerAPI } from '../../../api';
 
 orchestrator(registerAction, (actionMessage) => {
-  const {email, username, password, fullName } = actionMessage;
+  const { email, username, password, fullName } = actionMessage;
 
   if (password.length < 6) {
     CommonMessageStore.updateErrorAction('form.password.invalid');

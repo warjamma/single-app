@@ -1,8 +1,8 @@
-import { API } from "../../../api";
-import { API_UI_CONFIG_BASE_URL } from "../../../configuration";
-import { Language } from "../../../configuration/language";
-import { LocalStorageService } from "../../../configuration/local-storage";
-import { CONFIGURATION } from "../../../constants";
+import { API } from '../../../api';
+import { API_UI_CONFIG_BASE_URL } from '../../../configuration';
+import { Language } from '../../../configuration/language';
+import { LocalStorageService } from '../../../configuration/local-storage';
+import { CONFIGURATION } from '../../../constants';
 
 type TLocalUIContentVersion = {
   [key: string]: number;

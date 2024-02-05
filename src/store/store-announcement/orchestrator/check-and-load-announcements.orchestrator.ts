@@ -2,7 +2,7 @@ import { orchestrator } from 'satcheljs';
 import { checkAndLoadAnnouncementsAction } from '../action';
 import { fetchAnnouncementsAPI } from '../api';
 import { getStore } from '../store';
-import { CommonMessageStore, CoreLoadingStore } from '../../../store';
+import { CommonMessageStore, CoreLoadingStore } from '../..';
 
 orchestrator(checkAndLoadAnnouncementsAction, (actionMessage) => {
   const { refresh } = actionMessage;

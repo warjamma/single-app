@@ -11,7 +11,7 @@ const API_CONFIG_ID = 'app-shell-config';
 export class AppShellConfigService {
   private static _instance: AppShellConfigService;
 
-  public service$: BehaviorSubject<IAppShellConfig> = new BehaviorSubject({version: '',data: {}} as IAppShellConfig);
+  public service$: BehaviorSubject<IAppShellConfig> = new BehaviorSubject({ version: '', data: {} } as IAppShellConfig);
 
   public loading$: BehaviorSubject<boolean> = new BehaviorSubject(false);
 

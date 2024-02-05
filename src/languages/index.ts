@@ -1,4 +1,3 @@
-
 import { LangService } from '../configuration/language';
 
 import vi from './vi.json';

@@ -1,9 +1,9 @@
-import { createSlice, ActionReducerMapBuilder } from "@reduxjs/toolkit";
-import persistReducer from "redux-persist/es/persistReducer";
-import storage from "redux-persist/lib/storage";
+import { createSlice, ActionReducerMapBuilder } from '@reduxjs/toolkit';
+import persistReducer from 'redux-persist/es/persistReducer';
+import storage from 'redux-persist/lib/storage';
 
 const slice = createSlice({
-  name: "auth",
+  name: 'auth',
   initialState: {},
   reducers: {
     // add only sync reducer action from this slice file
@@ -15,7 +15,7 @@ const slice = createSlice({
 
 // config persist auth state
 const persistConfig = {
-  key: "auth",
+  key: 'auth',
   storage,
   whitelist: [],
 };
