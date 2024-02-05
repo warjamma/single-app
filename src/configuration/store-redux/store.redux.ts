@@ -1,21 +1,12 @@
-import { combineReducers, configureStore } from "@reduxjs/toolkit";
-import storage from "redux-persist/lib/storage";
-import {
-  FLUSH,
-  PAUSE,
-  PERSIST,
-  PURGE,
-  REGISTER,
-  REHYDRATE,
-  persistReducer,
-  persistStore,
-} from "redux-persist";
-import PagesReducer from "../../redux/pages/slice";
-import FeaturesReducer from "../../redux/features/slice";
+import { combineReducers, configureStore } from '@reduxjs/toolkit';
+import storage from 'redux-persist/lib/storage';
+import { FLUSH, PAUSE, PERSIST, PURGE, REGISTER, REHYDRATE, persistReducer, persistStore } from 'redux-persist';
+import PagesReducer from '../../redux/pages/slice';
+import FeaturesReducer from '../../redux/features/slice';
 
 // root config persist
 const persistConfig = {
-  key: "root",
+  key: 'root',
   storage,
   whitelist: [],
 };
@@ -45,7 +36,4 @@ export type AppDispatch = typeof store.dispatch;
 
 const persistor = persistStore(store);
 
-export {
-  persistor,
-  store
-}
+export { persistor, store };

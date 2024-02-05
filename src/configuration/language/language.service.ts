@@ -20,7 +20,7 @@ export const Languages: LanguageModel = {
   khm: '',
   prt: '',
   ko: '한국',
-  jp: '日本'
+  jp: '日本',
 };
 
 export interface ILangResource {

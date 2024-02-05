@@ -1,10 +1,10 @@
-import React, { useEffect } from "react";
-import { LangService } from "./configuration/language";
-import { useObserver } from "mobx-react";
-import { SystemConfigStore } from "./store";
-import { initWuiLoginLanguage } from "./languages";
-import { RouterProvider } from "react-router-dom";
-import { RouterLinks } from "./routes";
+import React, { useEffect } from 'react';
+import { LangService } from './configuration/language';
+import { useObserver } from 'mobx-react';
+import { SystemConfigStore } from './store';
+import { initWuiLoginLanguage } from './languages';
+import { RouterProvider } from 'react-router-dom';
+import { RouterLinks } from './routes';
 
 initWuiLoginLanguage();
 
@@ -17,9 +17,7 @@ const Root = () => {
     }
   }, [defaultLanguage]);
 
-  return (
-    <RouterProvider router={RouterLinks} fallbackElement={<p>Initial Load...</p>} />
-  );
-}
+  return <RouterProvider router={RouterLinks} fallbackElement={<p>Initial·Load...</p>} />;
+};
 
 export default Root;

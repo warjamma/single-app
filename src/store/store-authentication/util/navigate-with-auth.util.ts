@@ -1,7 +1,7 @@
 import { isLoginSelector } from '../selector';
 import { goToLoginPage } from './go-to-login-page.util';
 import { AppHistory } from '../../store-router-manager';
-import { Router as RemixRouter } from "@remix-run/router";
+import { Router as RemixRouter } from '@remix-run/router';
 
 export function navigateWithAuth(path: string, history?: RemixRouter, options?: { replace?: boolean }) {
   const isLogin = isLoginSelector();

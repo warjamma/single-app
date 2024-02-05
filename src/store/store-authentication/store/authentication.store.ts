@@ -3,7 +3,7 @@ import { createStore } from 'satcheljs';
 import { IAuthenticationStore } from './authentication.type';
 import { CONFIGURATION } from '../../../constants';
 
-import { LocalStorageService } from "../../../configuration/local-storage";
+import { LocalStorageService } from '../../../configuration/local-storage';
 
 const initStore: IAuthenticationStore = {
   idToken: LocalStorageService.getItem(CONFIGURATION.ID_TOKEN_LS_KEY) || undefined,

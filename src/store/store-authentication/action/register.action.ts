@@ -5,7 +5,7 @@ import { action } from 'satcheljs';
  */
 export const registerAction = action(
   'registerAction',
-  (email: string,username: string, password: string, fullName: string,) => {
-    return {email, username, password, fullName };
+  (email: string, username: string, password: string, fullName: string) => {
+    return { email, username, password, fullName };
   },
 );

@@ -3,7 +3,7 @@ import { updateAccessTokenAction } from '../action';
 import { CONFIGURATION } from '../../../constants';
 
 import { setApiAccessToken } from '../../../api';
-import { LocalStorageService } from "../../../configuration/local-storage";
+import { LocalStorageService } from '../../../configuration/local-storage';
 
 orchestrator(updateAccessTokenAction, ({ accessToken }) => {
   setApiAccessToken(accessToken);

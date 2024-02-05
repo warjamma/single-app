@@ -7,7 +7,7 @@ export const useLogin = () => {
   const [formError, setFormError] = useState<string>();
 
   // const { content } = useUIContent<ILoginPageContent>('login-content');
-  const  content  = loginContent;
+  const content = loginContent;
 
   const handleLogin: FormEventHandler = useCallback((ev) => {
     ev.preventDefault();

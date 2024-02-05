@@ -1,5 +1,5 @@
 import { orchestrator } from 'satcheljs';
-import { LocalStorageService } from "../../../configuration/local-storage";
+import { LocalStorageService } from '../../../configuration/local-storage';
 import { loadLocalContentAction, updateContentAction } from '../actions';
 import { isHasContent } from '../selectors';
 

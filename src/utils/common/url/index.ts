@@ -1,5 +1,5 @@
-import { LangService, Language } from "../../../configuration/language";
-import { CoreAuthenticationStore } from "../../../store";
+import { LangService, Language } from '../../../configuration/language';
+import { CoreAuthenticationStore } from '../../../store';
 
 const DOMAIN_TOKEN = /{{domain}}/;
 const ACCESS_TOKEN_TOKEN = /({{accessToken}})|({{token}})/;

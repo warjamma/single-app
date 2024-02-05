@@ -67,7 +67,7 @@ export const useSearchData = <T, P extends IBaseSearchParams, PP = any>(
 
   const resetSearch = useCallback(() => {
     onSearch(hookState.initSearchParams, true);
-  // eslint-disable-next-line react-hooks/exhaustive-deps
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [onSearch]);
 
   return {

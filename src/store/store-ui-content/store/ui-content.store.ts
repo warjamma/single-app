@@ -1,7 +1,7 @@
 import { observable } from 'mobx';
 import { createStore } from 'satcheljs';
 import { IUIContentStore } from './ui-content.type';
-import { LocalStorageService } from "../../../configuration/local-storage";
+import { LocalStorageService } from '../../../configuration/local-storage';
 import { CONFIGURATION } from '../../../constants';
 
 const initStore: IUIContentStore = {

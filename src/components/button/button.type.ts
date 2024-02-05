@@ -1,6 +1,6 @@
-import { ITotoLink } from "../../models";
+import { ITotoLink } from '../../models';
 
 export interface IButtonProps extends ITotoLink, React.DOMAttributes<HTMLButtonElement> {
-  type?: 'button'| 'link'| 'text';
+  type?: 'button' | 'link' | 'text';
   children?: React.ReactNode;
 }
