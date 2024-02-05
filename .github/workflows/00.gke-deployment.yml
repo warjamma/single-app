@@ -8,9 +8,6 @@ on:
       IMAGE:
         required: true
         type: string
-      OVERLAY_DIR:
-        required: true
-        type: string
       INGRESS_IP:
         required: true
         type: string
@@ -20,7 +17,6 @@ on:
 env:
   DEPLOYMENT_NAME: ${{ inputs.DEPLOYMENT_NAME }}
   IMAGE: ${{ inputs.IMAGE }}
-  OVERLAY_DIR: ${{ inputs.OVERLAY_DIR }}
   INGRESS_IP: ${{ inputs.INGRESS_IP }}
   DOT_ENV_FILE_NAME: ${{ inputs.DOT_ENV_FILE_NAME }}
 jobs:
