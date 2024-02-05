@@ -8,6 +8,7 @@ import { useForm } from 'react-hook-form';
 import { CoreAuthenticationStore } from '../../store';
 import { IRegisterPageProps, IRegisterFormModel } from './register.type';
 import * as yup from 'yup';
+import { Helmet } from 'react-helmet-async';
 
 const loginSchema = yup.object().shape({
   username: yup.string().required('form.userName.validate.require'),
@@ -39,6 +40,10 @@ export const RegisterPage: React.FC<IRegisterPageProps> = () => {
 
   return (
     <div className="toto-register">
+      <Helmet>
+        <title>Đăng ký</title>
+        <meta name="register" content="Description of register" />
+      </Helmet>
       <div
         className="w-screen min-h-screen bg-center bg-cover flex justify-center items-center p-2"
         style={{ backgroundImage: 'url("https://picsum.photos/1600/900")' }}

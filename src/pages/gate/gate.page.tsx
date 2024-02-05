@@ -1,6 +1,7 @@
 import React, { FormEventHandler, useCallback } from 'react';
 import { IGatePageProps } from './gate.type';
 import { useNavigate } from 'react-router-dom';
+import { Helmet } from 'react-helmet-async';
 
 const { PUBLIC_PRIVATE_TEST_CODE } = process.env;
 
@@ -27,6 +28,10 @@ export const GatePage: React.FC<IGatePageProps> = () => {
       className="toto-gate w-screen min-h-screen bg-center bg-cover flex justify-center items-center p-2"
       style={{ backgroundImage: 'url("https://picsum.photos/1600/900")' }}
     >
+      <Helmet>
+        <title>Gate Page</title>
+        <meta name="gate" content="Gate Page" />
+      </Helmet>
       <div className="w-full max-w-[1300px] px-2 lg:px-0 mx-auto">
         <div className="rounded-2xl bg-white dark:bg-black lg:w-[500px] mx-auto p-8">
           <div className="text-3xl font-bold mb-8 text-center">Trải nghiệm private test</div>
