@@ -6,6 +6,7 @@ import Root from './root.component';
 import { PersistGate } from 'redux-persist/integration/react';
 import { store, persistor } from './configuration';
 import { Provider } from 'react-redux';
+import { HelmetProvider } from 'react-helmet-async';
 
 const root = ReactDOM.createRoot(document.getElementById('root') as HTMLElement);
 
@@ -13,7 +14,9 @@ root.render(
   <React.StrictMode>
     <Provider store={store}>
       <PersistGate loading={null} persistor={persistor}>
-        <Root />
+        <HelmetProvider>
+          <Root />
+        </HelmetProvider>
       </PersistGate>
     </Provider>
   </React.StrictMode>,
