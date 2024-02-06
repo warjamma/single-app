@@ -11,6 +11,10 @@ export const PHONE_NUMBER_REGEX = /^[0-9]{7,11}$/;
 export const FULL_PHONE_NUMBER_REGEX = /^\+[0-9]{9,14}$/;
 export const CLEAN_PHONE_NUMBER_REGEX = /(^0)|\s|\r|\n|-/g;
 export const OTP_REGEX = /^[0-9]{3,}$/;
+export const REGEX_MAIL =
+  /^(([^<>()\\[\]\\.,;:\s@"]+(\.[^<>()\\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
+export const REGEX_PASSWORD = /^(?=.*?[A-Z])(?=(.*[a-z]){1,})(?=(.*[\d]){1,})(?=(.*[\W]){1,})(?!.*\s).{8,}$/;
+export const REGEX_PHONE = /^(\+?\d{0,4})?\s?-?\s?(\(?\d{3}\)?)\s?-?\s?(\(?\d{3}\)?)\s?-?\s?(\(?\d{4}\)?)?$/;
 
 export const PHONE_COUNTRY_CODES = ['+84', '+65', '+63', '+86'];
 export const GENERATE_OTP_COUNT_DOWN_DURATION = 180; // * seconds

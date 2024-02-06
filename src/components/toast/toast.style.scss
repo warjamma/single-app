@@ -1,0 +1,62 @@
+.toto-wui-admin-toast {
+  position: relative;
+  display: none;
+  align-items: center;
+  gap: var(--tt-spacing-03);
+
+  box-shadow: var(--tt-box-shadow-04);
+  padding: var(--tt-spacing-03) var(--tt-spacing-04);
+  padding-right: var(--tt-spacing-06);
+
+  max-width: 320px;
+  min-width: 220px;
+
+  background: var(--tt-color-background);
+  pointer-events: auto;
+
+  &.open {
+    display: flex;
+  }
+
+  &__close-button {
+    position: absolute;
+    top: 4px;
+    right: 6px;
+
+    cursor: pointer;
+  }
+
+  &__icon {
+    min-width: 24px;
+    font-size: var(--tt-font-size-05);
+  }
+
+  &__title {
+    font-size: 1.025em;
+    font-weight: 600;
+  }
+
+  &__content {
+    font-size: var(--tt-font-size-01);
+  }
+
+  &.success {
+    background: var(--tt-color-success);
+    color: var(--tt-color-text-inverse);
+  }
+
+  &.error {
+    background: var(--tt-color-error);
+    color: var(--tt-color-text-inverse);
+  }
+
+  &.info {
+    background: var(--tt-color-info);
+    color: var(--tt-color-text);
+  }
+
+  &.warning {
+    background: var(--tt-color-warning);
+    color: var(--tt-color-text);
+  }
+}

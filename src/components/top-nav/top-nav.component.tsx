@@ -103,7 +103,7 @@ export const TopNav: React.FC<ITopNavProps> = () => {
               </Button>
             )}
             {!isLogin && (
-              <div className="hidden lg:flex">
+              <div className="lg:flex">
                 <Button
                   className="rounded-md  flex justify-center items-center gap-2  h-10 text-sm px-4 py-2 bg-brand-300 dark:bg-brand-400 text-white dark:text-gray-100 hover:bg-brand-400 dark:hover:bg-brand-500 break-words transition duration-200 "
                   type="link"

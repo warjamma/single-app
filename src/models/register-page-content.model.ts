@@ -1,46 +1,38 @@
-/* eslint-disable camelcase */
-
-export interface IAgentCodeDomain {
-  domains?: string; // separate by comma, set domains undefined if want use default
-  code?: string;
-}
-
 export interface IRegisterPageContent {
-  title?: string;
-  background?: string;
-  errorNotBlank?: string;
-  errorInvalidPhoneNumber?: string;
-  storeShareLinkCode?: string;
-  defaultAgentCode?: string;
-  buttonSubmit?: string;
+  title: string;
 
-  labelEmail?: string;
-  placeholderEmail?: string;
-  defaultEmail?: string;
-  errorEmail?: string;
+  btnRegister: string;
+  checkBoxHasAccount: string;
+  infoRegister: string;
 
-  labelFullName?: string;
-  placeholderFullName?: string;
-  defaultFullName?: string;
-  errorFullName?: string;
+  labelEmail: string;
+  labelFullName: string;
+  labelUsername: string;
+  labelPassword: string;
+  labelConfirmPassword: string;
+  labelCodeRef: string;
 
-  labelUsername?: string;
-  placeholderUsername?: string;
-  defaultUsername?: string;
-  errorUsername?: string;
+  errorRequiredEmail: string;
+  errorRequiredFullName: string;
+  errorRequiredUsername: string;
+  errorRequirePassword: string;
+  errorRequirePasswordMinLength: string;
+  errorRequireConfirmPassword: string;
+  errorRequireConfirmPasswordMinLength: string;
+  errorRequireConfirmPasswordNotMatchValidation: string;
+  errorRequireCodeRef: string;
 
-  labelPassword?: string;
-  placeholderPassword?: string;
-  defaultPassword?: string;
-  errorPassword?: string;
+  placeholderEmail: string;
+  placeholderFullName: string;
+  placeholderUsername: string;
+  placeholderPassword: string;
+  placeholderConfirmPassword: string;
+  placeholderCodeRef: string;
 
-  labelConfirmPassword?: string;
-  placeholderConfirmPassword?: string;
-  defaultConfirmPassword?: string;
-  errorConfirmPassword?: string;
-
-  labelCode?: string;
-  placeholderCode?: string;
-  defaultCode?: string;
-  errorCode?: string;
+  defaultValueEmail: string;
+  defaultValueFullName: string;
+  defaultValueUsername: string;
+  defaultValuePassword: string;
+  defaultValueConfirmPassword: string;
+  defaultValueCodeRef: string;
 }

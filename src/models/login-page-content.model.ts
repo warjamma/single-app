@@ -25,5 +25,4 @@ export interface ILoginPageContent {
 
   placeholderEmail?: string;
   placeholderPassword?: string;
-
 }
