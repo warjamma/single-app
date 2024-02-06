@@ -1,42 +1,49 @@
-import './register.style.scss';
-import React, { useCallback } from 'react';
-import { useRegister } from '../../hooks/use-register';
+import React from 'react';
+import { IRegisterFormData, useRegister } from '../../hooks/use-register';
 import { useLangTranslation } from '../../configuration/language';
 import { LANGUAGE_NAMESPACE } from '../../languages';
 import { yupResolver } from '@hookform/resolvers/yup';
 import { useForm } from 'react-hook-form';
-import { CoreAuthenticationStore } from '../../store';
-import { IRegisterPageProps, IRegisterFormModel } from './register.type';
+import { IRegisterPageProps } from './register.type';
 import * as yup from 'yup';
 import { Helmet } from 'react-helmet-async';
-
-const loginSchema = yup.object().shape({
-  username: yup.string().required('form.userName.validate.require'),
-  fullName: yup.string().required('form.fullName.validate.require'),
-  email: yup.string().required('form.email.validate.require'),
-  password: yup.string().required('form.password.validate.require').min(6, 'form.password.validate.min.length'),
-  code: yup.string().required('form.code.validate.require').min(6, 'form.password.validate.min.length'),
-  confirmPassword: yup.string().required('form.password.validate.require').min(6, 'form.password.validate.min.length'),
-});
 
 export const RegisterPage: React.FC<IRegisterPageProps> = () => {
   const { translator } = useLangTranslation(LANGUAGE_NAMESPACE);
 
-  const { defaultShareCode, formError, handleRegister, contentData } = useRegister();
+  const { handleRegister, contentData } = useRegister();
+
+  const loginSchema = yup.object().shape({
+    email: yup
+      .string()
+      .email('Định dạng email không hợp lệ. Vui lòng thử lại')
+      .required(contentData?.errorRequiredEmail),
+    username: yup.string().required(contentData?.errorRequiredUsername),
+    fullName: yup.string().required(contentData?.errorRequiredFullName),
+    password: yup
+      .string()
+      .required(contentData?.errorRequirePassword)
+      .min(6, contentData?.errorRequirePasswordMinLength),
+    confirmPassword: yup
+      .string()
+      .min(6, contentData?.errorRequireConfirmPasswordMinLength)
+      .required(contentData?.errorRequireConfirmPassword)
+      .oneOf([yup.ref('password'), ''], contentData?.errorRequireConfirmPasswordNotMatchValidation),
+    code: yup.string().required(contentData?.errorRequireCodeRef),
+  });
 
   const {
     handleSubmit,
     register,
     formState: { errors },
-  } = useForm<IRegisterFormModel>({
-    mode: 'onSubmit',
+    clearErrors,
+  } = useForm<IRegisterFormData>({
+    mode: 'onBlur',
+    reValidateMode: 'onChange',
+    shouldUnregister: false,
     resolver: yupResolver(loginSchema),
-    defaultValues: { email: contentData?.defaultEmail, password: contentData?.defaultPassword },
+    defaultValues: {},
   });
-
-  const onSubmit = useCallback((data: IRegisterFormModel) => {
-    CoreAuthenticationStore.loginAction(data.email, data.password);
-  }, []);
 
   return (
     <div className="toto-register">
@@ -65,22 +72,27 @@ export const RegisterPage: React.FC<IRegisterPageProps> = () => {
               </a>
             </div>
             <div className="text-2xl font-bold mb-8 text-center">{contentData?.title}</div>
-            <form className="mb-4" onSubmit={handleSubmit(onSubmit)}>
+            <form className="mb-4" onSubmit={handleSubmit(handleRegister)}>
               <div className="mb-4">
                 <label className="block font-medium text-sm mb-2 " htmlFor="email">
-                  ={contentData?.labelEmail}
+                  {contentData?.labelEmail}
                 </label>
                 <input
                   className="rounded-md block w-full bg-zinc-100 dark:bg-zinc-800 text-sm px-4 py-2 "
                   id="email"
-                  type="email"
+                  type="text"
                   {...register('email')}
                   placeholder={contentData?.placeholderEmail}
-                  defaultValue={contentData?.defaultEmail}
+                  defaultValue={contentData?.defaultValueEmail}
+                  onChange={(e) => {
+                    if (!e.target.value) {
+                      clearErrors('email');
+                    }
+                  }}
                 />
                 {errors.email && (
                   <label className="block font-medium text-sm mb-2 mt-3 text-red-600" htmlFor="email">
-                    {contentData?.errorEmail}
+                    {errors.email?.message?.toString()}
                   </label>
                 )}
               </div>
@@ -94,11 +106,16 @@ export const RegisterPage: React.FC<IRegisterPageProps> = () => {
                   type="text"
                   {...register('fullName')}
                   placeholder={contentData?.placeholderFullName}
-                  defaultValue={contentData?.defaultFullName}
+                  defaultValue={contentData?.defaultValueFullName}
+                  onChange={(e) => {
+                    if (!e.target.value) {
+                      clearErrors('fullName');
+                    }
+                  }}
                 />
                 {errors.fullName && (
                   <label className="block font-medium text-sm mb-2 mt-3 text-red-600" htmlFor="fullName">
-                    {contentData?.errorFullName}
+                    {errors.fullName?.message?.toString()}
                   </label>
                 )}
               </div>
@@ -110,13 +127,18 @@ export const RegisterPage: React.FC<IRegisterPageProps> = () => {
                   className="rounded-md block w-full bg-zinc-100 dark:bg-zinc-800 text-sm px-4 py-2 "
                   id="username"
                   type="text"
-                  {...register('email')}
+                  {...register('username')}
                   placeholder={contentData?.placeholderUsername}
-                  defaultValue={contentData?.defaultUsername}
+                  defaultValue={contentData?.defaultValueUsername}
+                  onChange={(e) => {
+                    if (!e.target.value) {
+                      clearErrors('username');
+                    }
+                  }}
                 />
                 {errors.username && (
                   <label className="block font-medium text-sm mb-2 mt-3 text-red-600" htmlFor="username">
-                    {contentData?.errorUsername}
+                    {errors.username?.message?.toString()}
                   </label>
                 )}
               </div>
@@ -128,13 +150,18 @@ export const RegisterPage: React.FC<IRegisterPageProps> = () => {
                   className="rounded-md block w-full bg-zinc-100 dark:bg-zinc-800 text-sm px-4 py-2 "
                   id="password"
                   type="password"
-                  {...register('email')}
-                  placeholder={contentData?.defaultPassword}
-                  defaultValue={contentData?.defaultPassword}
+                  {...register('password')}
+                  placeholder={contentData?.defaultValuePassword}
+                  defaultValue={contentData?.defaultValuePassword}
+                  onChange={(e) => {
+                    if (!e.target.value) {
+                      clearErrors('password');
+                    }
+                  }}
                 />
                 {errors.password && (
                   <label className="block font-medium text-sm mb-2 mt-3 text-red-600" htmlFor="password">
-                    {contentData?.errorPassword}
+                    {errors.password?.message?.toString()}
                   </label>
                 )}
               </div>
@@ -148,29 +175,39 @@ export const RegisterPage: React.FC<IRegisterPageProps> = () => {
                   type="password"
                   {...register('confirmPassword')}
                   placeholder={contentData?.placeholderConfirmPassword}
-                  defaultValue={contentData?.defaultConfirmPassword}
+                  defaultValue={contentData?.defaultValueConfirmPassword}
+                  onChange={(e) => {
+                    if (!e.target.value) {
+                      clearErrors('confirmPassword');
+                    }
+                  }}
                 />
                 {errors.confirmPassword && (
                   <label className="block font-medium text-sm mb-2 mt-3 text-red-600" htmlFor="confirmPassword">
-                    {contentData?.errorConfirmPassword}
+                    {errors.confirmPassword?.message?.toString()}
                   </label>
                 )}
               </div>
               <div className="mb-4">
                 <label className="block font-medium text-sm mb-2 " htmlFor="code">
-                  {contentData?.labelCode}
+                  {contentData?.labelCodeRef}
                 </label>
                 <input
                   className="rounded-md block w-full bg-zinc-100 dark:bg-zinc-800 text-sm px-4 py-2 "
                   id="code"
                   type="text"
                   {...register('code')}
-                  placeholder={contentData?.placeholderCode}
-                  defaultValue={contentData?.defaultCode}
+                  placeholder={contentData?.placeholderCodeRef}
+                  defaultValue={contentData?.defaultValueCodeRef}
+                  onChange={(e) => {
+                    if (!e.target.value) {
+                      clearErrors('code');
+                    }
+                  }}
                 />
                 {errors.code && (
                   <label className="block font-medium text-sm mb-2 mt-3 text-red-600" htmlFor="code">
-                    {contentData?.errorCode}
+                    {errors.code?.message?.toString()}
                   </label>
                 )}
               </div>
@@ -178,7 +215,7 @@ export const RegisterPage: React.FC<IRegisterPageProps> = () => {
                 type="submit"
                 className="rounded-md flex justify-center items-center gap-2 h-10 text-sm px-4 py-2 bg-brand-300 dark:bg-brand-400 text-white dark:text-gray-100 hover:bg-brand-400 dark:hover:bg-brand-500 break-words transition duration-200 w-full"
               >
-                <div className="line-clamp-1">{contentData?.defaultCode}</div>
+                <div className="line-clamp-1">{contentData?.btnRegister}</div>
               </button>
             </form>
             <div className="mb-8">
@@ -188,7 +225,7 @@ export const RegisterPage: React.FC<IRegisterPageProps> = () => {
                 className="rounded-md flex justify-center items-center gap-2 h-10 text-sm px-4 py-2 bg-brand-300 dark:bg-brand-400 text-white dark:text-gray-100 hover:bg-brand-400 dark:hover:bg-brand-500 break-words transition duration-200 w-full"
                 role="button"
               >
-                <div className="line-clamp-1">Tôi đã có tài khoản</div>
+                <div className="line-clamp-1">{contentData?.checkBoxHasAccount}</div>
               </a>
             </div>
             <p className="text-xs text-center text-zinc-500 dark:text-zinc-300 mb-4">

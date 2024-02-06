@@ -1,4 +1,4 @@
 export interface ILoginFormData {
-  username: { value: string };
-  password: { value: string };
+  email: string;
+  password: string;
 }

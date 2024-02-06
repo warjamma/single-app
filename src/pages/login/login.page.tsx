@@ -1,37 +1,34 @@
-import React, { useCallback } from 'react';
+import React from 'react';
 import { ILoginFormModel, ILoginPageProps } from './login.type';
 import { useLogin } from '../../hooks/use-login';
 import { yupResolver } from '@hookform/resolvers/yup';
 import * as yup from 'yup';
 import { useForm } from 'react-hook-form';
-import { CoreAuthenticationStore } from '../../store';
 import { useLangTranslation } from '../../configuration/language';
 import { LANGUAGE_NAMESPACE } from '../../languages';
 import { Helmet } from 'react-helmet-async';
 
-const loginSchema = yup.object().shape({
-  email: yup.string().required('form.email.validate.require'),
-  password: yup.string().required('form.password.validate.require').min(6, 'form.password.validate.min.length'),
-});
-
 export const LoginPage: React.FC<ILoginPageProps> = () => {
-  const { contentData } = useLogin();
+  const { handleLogin, contentData } = useLogin();
 
   const { translator } = useLangTranslation(LANGUAGE_NAMESPACE);
+
+  const loginSchema = yup.object().shape({
+    email: yup.string().email('Định dạng email không hợp lệ. Vui lòng thử lại').required('Email không được để trống'),
+    password: yup.string().required('form.password.validate.require').min(6, 'form.password.validate.min.length'),
+  });
 
   const {
     handleSubmit,
     register,
     formState: { errors },
+    clearErrors,
   } = useForm<ILoginFormModel>({
-    mode: 'onSubmit',
+    mode: 'onBlur',
+    reValidateMode: 'onChange',
     resolver: yupResolver(loginSchema),
     defaultValues: { email: contentData?.defaultEmail, password: contentData?.defaultPassword },
   });
-
-  const onSubmit = useCallback((data: ILoginFormModel) => {
-    CoreAuthenticationStore.loginAction(data.email, data.password);
-  }, []);
 
   return (
     <div className="toto-login">
@@ -59,9 +56,7 @@ export const LoginPage: React.FC<ILoginPageProps> = () => {
                 </svg>
               </a>
             </div>
-            <div className="text-3xl font-bold mb-8 text-center">
-              Đăng nhập {translator('page.login.title', { defaultValue: '' })}
-            </div>
+            <div className="text-3xl font-bold mb-8 text-center">Đăng nhập</div>
             <div className="flex justify-center items-center space-x-4 mb-8" data-svelte-h="svelte-tkh4w5">
               <button className="rounded-2xl border border-zinc-400 flex justify-center items-center w-10 h-10 bg-zinc-50 dark:bg-zinc-800 p-2">
                 <svg
@@ -87,7 +82,7 @@ export const LoginPage: React.FC<ILoginPageProps> = () => {
               <p className="flex-1 text-zinc-500 dark:text-zinc-300 text-center text-xs">nếu bạn đã có tài khoản</p>
               <div className="flex-1 h-px bg-zinc-100" />
             </div>
-            <form className="mb-4" onSubmit={handleSubmit(onSubmit)}>
+            <form className="mb-4" onSubmit={handleSubmit(handleLogin)}>
               <div className="mb-4">
                 <label className="block font-medium text-sm mb-2 " htmlFor="email">
                   Email
@@ -98,9 +93,14 @@ export const LoginPage: React.FC<ILoginPageProps> = () => {
                   }`}
                   id="email"
                   type="text"
-                  {...(register('email') as any)}
+                  {...register('email')}
                   placeholder={contentData?.placeholderEmail}
                   defaultValue={contentData?.defaultEmail}
+                  onChange={(e) => {
+                    if (!e.target.value) {
+                      clearErrors('email');
+                    }
+                  }}
                 />
                 {errors.email && (
                   <label className="block font-medium text-sm mb-2 mt-3 text-red-600" htmlFor="email">
@@ -118,9 +118,14 @@ export const LoginPage: React.FC<ILoginPageProps> = () => {
                   }`}
                   id="password"
                   type="password"
-                  {...(register('password') as any)}
+                  {...register('password')}
                   placeholder={contentData?.placeholderPassword}
                   defaultValue={contentData?.defaultPassword}
+                  onChange={(e) => {
+                    if (!e.target.value) {
+                      clearErrors('password');
+                    }
+                  }}
                 />
                 {errors.password && (
                   <label className="block font-medium text-sm mb-2 mt-3 text-red-600" htmlFor="password">

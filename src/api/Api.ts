@@ -2,6 +2,7 @@ import axios from 'axios';
 import { ApiError } from '.';
 import { logOutAction } from '../store/store-authentication/action';
 import { PUBLIC_API_ENDPOINT } from '../constants/platform';
+import { loginUrlSelector } from '../store/store-authentication/selector';
 
 const API = axios.create({
   baseURL: `${PUBLIC_API_ENDPOINT}`,
@@ -82,11 +83,8 @@ API.interceptors.response.use(
   },
   (error: ApiError) => {
     if (error?.response?.status === 401) {
-      // if (error?.response?.data?.code === 1998) {
-      //   CoreAuthenticationStore.updateIsMustVerifyPhoneAction(true);
-      //   CoreAuthenticationStore.goToVerifyPhone(500);
-      // } else
-      logOutAction();
+      const loginUrl = loginUrlSelector();
+      logOutAction(loginUrl);
     }
     throw error?.response?.data?.code || 1; // 1: default error code
   },
