@@ -1,11 +1,27 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { IPostProps } from './post.type';
 import { Button } from '../button';
+import dayjs from 'dayjs';
 
 const classNamePrefix = 'tt-post-component';
 
-export const Post: React.FC<IPostProps> = () => {
+export const Post: React.FC<IPostProps> = (props) => {
+  const { getComment, post, comments } = props;
+
   const [isShowMoreMenu, setShowMoreMenu] = useState(false);
+
+  const [isShowComment, setShowComment] = useState(false);
+
+  useEffect(() => {
+    isShowComment && getComment && post?.id && getComment(post.id);
+  }, [getComment, isShowComment, post?.id]);
+
+  const loadMoreComment = () => {
+    /**
+     * TOTO: Load more comments
+     */
+  };
+
   return (
     <div className={`${classNamePrefix} mb-4 post-item item::8242946a-051c-42eb-87c0-deee675f689c`}>
       <div className="rounded-xl flex transition duration-200 bg-gray-50 dark:bg-black flex-col">
@@ -13,15 +29,11 @@ export const Post: React.FC<IPostProps> = () => {
           <div className="flex justify-between items-center">
             <div className="flex">
               <div className="flex items-center mr-4">
-                <img
-                  className="rounded-full h-10 w-10"
-                  src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTY2N8lDJmYah54o1y1RvYEtX6rq54lduk2MQ&usqp=CAU"
-                  alt=""
-                />
+                <img className="rounded-full h-10 w-10" src={post?.userAvatar ?? ''} alt="" />
               </div>
               <div>
                 <a className="inline-block text-black dark:text-white text-sm font-bold mb-[2px]" href="/u/a">
-                  User Fullname
+                  {post?.userFullName ?? 'Người dùng không xác định'}
                 </a>
                 <div className="flex items-center space-x-2 text-xs">
                   <div className="relative">
@@ -31,7 +43,7 @@ export const Post: React.FC<IPostProps> = () => {
                   <a className="text-branding font-semibold mr-2" href="/c/a">
                     Công nghệ
                   </a>{' '}
-                  <span>•</span> <span>2939182923 giờ trước</span> <span>•</span>{' '}
+                  <span>•</span> <span>{dayjs(post?.updatedAt).fromNow()} trước</span> <span>•</span>{' '}
                   <button>
                     <i className="fas fa-trophy" />
                   </button>
@@ -139,60 +151,39 @@ export const Post: React.FC<IPostProps> = () => {
               )}
             </div>
           </div>
-          <a href="/p/a" className="inline-block text-lg font-bold py-4">
-            cumque
-          </a>
-          <p className="text-sm">esse</p>
+          <div className="inline-block text-lg font-bold py-4">{post?.title}</div>
+          <p className="text-sm">{post?.content}</p>
           <ul className="flex text-branding text-sm py-4">
-            <li className="mr-1">
-              <p>#dolores</p>
-            </li>
-            <li className="mr-1">
-              <p>#architecto</p>
-            </li>
-            <li className="mr-1">
-              <p>#sit</p>
-            </li>
-            <li className="mr-1">
-              <p>#et</p>
-            </li>
-            <li className="mr-1">
-              <p>#at</p>
-            </li>
+            {post?.hashtags &&
+              post.hashtags.map((ht, index) => {
+                return (
+                  <li className="mr-1" key={post?.hashtag_Ids?.[index]}>
+                    <a href={`/hashtag/${post?.hashtag_Ids?.[index]}`}>{ht}</a>
+                  </li>
+                );
+              })}
           </ul>
           <div>
             <div className="grid grid-cols-2 gap-1 mb-4">
-              <button className="relative block rounded-md">
-                <img
-                  className="rounded-md h-full object-cover "
-                  src="https://loremflickr.com/320/240?lock=58161377"
-                  alt=""
-                />{' '}
-              </button>
-              <button className="relative block rounded-md">
-                <img
-                  className="rounded-md h-full object-cover "
-                  src="https://loremflickr.com/320/240?lock=1074964987"
-                  alt=""
-                />{' '}
-              </button>
-              <button className="relative block rounded-md">
-                <img
-                  className="rounded-md h-full object-cover "
-                  src="https://loremflickr.com/320/240?lock=2134450976"
-                  alt=""
-                />{' '}
-              </button>
-              <button className="relative block rounded-md">
-                <div className="absolute z-[1] top-0 left-0 rounded-md w-full h-full bg-black/50 text-white font-medium backdrop-blur p-4">
-                  <div className="h-full flex justify-center items-center">Xem thêm</div>
-                </div>
-                <img
-                  className="rounded-md object-cover w-full h-full "
-                  src="https://loremflickr.com/320/240?lock=1535909826"
-                  alt=""
-                />
-              </button>
+              {post?.imageUrls &&
+                post.imageUrls.map((img, key) => {
+                  if (key > 3) return;
+                  if (key === 3)
+                    return (
+                      <button key={Math.random().toString(36).substring(2, 15)} className="relative block rounded-md">
+                        <div className="absolute z-[1] top-0 left-0 rounded-md w-full h-full bg-black/50 text-white font-medium backdrop-blur p-4">
+                          <div className="h-full flex justify-center items-center">Xem thêm</div>
+                        </div>
+                        <img className="rounded-md object-cover w-full h-full " src={img} alt="" />
+                      </button>
+                    );
+
+                  return (
+                    <button key={Math.random().toString(36).substring(2, 15)} className="relative block rounded-md">
+                      <img className="rounded-md h-full object-cover " src={img} alt="" />
+                    </button>
+                  );
+                })}
             </div>
             <div />
           </div>
@@ -203,7 +194,7 @@ export const Post: React.FC<IPostProps> = () => {
                 className="rounded-md  flex justify-center items-center gap-2  h-8 text-xs px-2 py-1 bg-brand-500/20 dark:bg-brand-500/20 text-brand-500 dark:text-brand-200 break-words transition duration-200 "
               >
                 <div className="line-clamp-1">
-                  3
+                  {post?.voteUpCount}
                   <svg
                     xmlns="http://www.w3.org/2000/svg"
                     className="icon icon-tabler icon-tabler-thumb-up-filled"
@@ -235,7 +226,7 @@ export const Post: React.FC<IPostProps> = () => {
                 className="rounded-md  flex justify-center items-center gap-2  h-8 text-xs px-2 py-1 bg-brand-500/20 dark:bg-brand-500/20 text-brand-500 dark:text-brand-200 break-words transition duration-200 "
               >
                 <div className="line-clamp-1">
-                  0
+                  {post?.voteDownCount}
                   <svg
                     xmlns="http://www.w3.org/2000/svg"
                     className="icon icon-tabler icon-tabler-thumb-down-filled"
@@ -264,25 +255,105 @@ export const Post: React.FC<IPostProps> = () => {
               </button>
               <button
                 type="button"
-                className="rounded-md  flex justify-center items-center gap-2  h-8 text-xs px-2 py-1 bg-brand-500/20 dark:bg-brand-500/20 text-brand-500 dark:text-brand-200 break-words transition duration-200 "
+                className={`rounded-md  flex justify-center items-center gap-2  h-8 text-xs px-2 py-1 break-words transition duration-200
+                ${
+                  !isShowComment
+                    ? `bg-brand-500/20 dark:bg-brand-500/20 text-brand-500 dark:text-brand-200`
+                    : `bg-brand-300 dark:bg-brand-400 text-white dark:text-gray-100 hover:bg-brand-400 dark:hover:bg-brand-500`
+                }`}
+                onClick={() => setShowComment(!isShowComment)}
               >
-                <svg xmlns="http://www.w3.org/2000/svg" className="h-5 w-5" viewBox="0 0 20 20" fill="currentColor">
-                  <path d="M2 5a2 2 0 012-2h7a2 2 0 012 2v4a2 2 0 01-2 2H9l-3 3v-3H4a2 2 0 01-2-2V5z" />
-                  <path d="M15 7v2a4 4 0 01-4 4H9.828l-1.766 1.767c.28.149.599.233.938.233h2l3 3v-3h2a2 2 0 002-2V9a2 2 0 00-2-2h-1z" />
-                </svg>
-                <div className="line-clamp-1" />
+                <div className="line-clamp-1">
+                  {post?.commentsCount}
+                  <svg xmlns="http://www.w3.org/2000/svg" className="h-5 w-5" viewBox="0 0 20 20" fill="currentColor">
+                    <path d="M2 5a2 2 0 012-2h7a2 2 0 012 2v4a2 2 0 01-2 2H9l-3 3v-3H4a2 2 0 01-2-2V5z" />
+                    <path d="M15 7v2a4 4 0 01-4 4H9.828l-1.766 1.767c.28.149.599.233.938.233h2l3 3v-3h2a2 2 0 002-2V9a2 2 0 00-2-2h-1z" />
+                  </svg>
+                </div>
               </button>
               <button
                 type="button"
                 className="rounded-md  flex justify-center items-center gap-2  h-8 text-xs px-2 py-1 bg-brand-500/20 dark:bg-brand-500/20 text-brand-500 dark:text-brand-200 break-words transition duration-200 "
               >
-                <svg xmlns="http://www.w3.org/2000/svg" className="h-5 w-5" viewBox="0 0 20 20" fill="currentColor">
-                  <path d="M15 8a3 3 0 10-2.977-2.63l-4.94 2.47a3 3 0 100 4.319l4.94 2.47a3 3 0 10.895-1.789l-4.94-2.47a3.027 3.027 0 000-.74l4.94-2.47C13.456 7.68 14.19 8 15 8z" />
-                </svg>
-                <div className="line-clamp-1" />
+                <div className="line-clamp-1">
+                  <svg xmlns="http://www.w3.org/2000/svg" className="h-5 w-5" viewBox="0 0 20 20" fill="currentColor">
+                    <path d="M15 8a3 3 0 10-2.977-2.63l-4.94 2.47a3 3 0 100 4.319l4.94 2.47a3 3 0 10.895-1.789l-4.94-2.47a3.027 3.027 0 000-.74l4.94-2.47C13.456 7.68 14.19 8 15 8z" />
+                  </svg>
+                </div>
               </button>
             </div>
           </div>
+          {isShowComment && (
+            <div className="py-4">
+              <div className="rounded-full flex items-center bg-system-gray-light-6 dark:bg-system-gray-dark-6 mb-4">
+                <input
+                  className="flex-1 block bg-transparent text-sm px-4 py-2 focus:outline-none"
+                  type="text"
+                  placeholder="Viết bình luận..."
+                />
+              </div>
+              {comments &&
+                comments.map((comment) => {
+                  const {
+                    id,
+                    postId,
+                    userId,
+                    userFullName,
+                    avatar,
+                    content,
+                    upvotesCount,
+                    downvotesCount,
+                    status,
+                    replies,
+                    updatedAt,
+                    createdAt,
+                  } = comment;
+                  return (
+                    <div key={id} className="toto-response">
+                      <div className="flex space-x-4">
+                        <div className="flex-shrink-0">
+                          <img src={avatar} alt="User Avatar" className="w-8 h-8 rounded-full" />
+                        </div>
+                        <div>
+                          <div className="text-gray-700 font-semibold">{userFullName}</div>
+                          <p className="text-gray-600">{content}</p>
+                        </div>
+                      </div>
+                      <div className="ml-12 mt-4 space-y-2">
+                        {replies.map((reply) => {
+                          const {
+                            id: refId,
+                            commentId: refCommentId,
+                            userId: refUserId,
+                            userFullName: refUserFullName,
+                            avatar: refAvatar,
+                            parentReplyId: refParentReplyId,
+                            replyLevel: refReplyLevel,
+                            content: refContent,
+                            upvotesCount: refUpvotesCount,
+                            downvotesCount: refDownvotesCount,
+                            status: refStatus,
+                            updatedAt: refUpdatedAt,
+                            createdAt: refCreatedAt,
+                          } = reply;
+                          return (
+                            <div key={refId} className="flex space-x-4">
+                              <div className="flex-shrink-0">
+                                <img src={refAvatar} alt="User Avatar" className="w-8 h-8 rounded-full" />
+                              </div>
+                              <div>
+                                <div className="text-gray-700 font-semibold">{refUserFullName}</div>
+                                <p className="text-gray-600">{refContent}</p>
+                              </div>
+                            </div>
+                          );
+                        })}
+                      </div>
+                    </div>
+                  );
+                })}
+            </div>
+          )}
           <div />
         </div>
       </div>

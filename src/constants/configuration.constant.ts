@@ -32,3 +32,54 @@ export const LOGIN_URL_LS_KEY = 'loginUrl';
 export const REGISTER_URL_LS_KEY = 'registerUrl';
 export const PHONE_NUMBER_LS_KEY = 'phoneNumber';
 export const IS_MUST_VERIFY_PHONE_LS_KEY = 'isMustVerify';
+
+//* Day js
+export const MOMENT_UPDATE_LOCALE_EN = {
+  relativeTime: {
+    future: 'in %s',
+    past: '%s',
+    s: '1 sec',
+    ss: '%d sec',
+    m: '1 min',
+    mm: '%d min',
+    h: '1h',
+    hh: '%dh',
+    d: '1d',
+    dd(number) {
+      if (number < 7) {
+        return `${number}d`;
+      }
+      const weeks = Math.round(number / 7);
+      return `${weeks}w`;
+    },
+    M: '1m',
+    MM: '%dm',
+    y: '1y',
+    yy: '%dy',
+  },
+};
+
+export const MOMENT_UPDATE_LOCALE_VI = {
+  relativeTime: {
+    future: 'in % giây',
+    past: '% giây',
+    s: '1 giây',
+    ss: '%d giây',
+    m: '1 phút',
+    mm: '%d phút',
+    h: '1 giờ',
+    hh: '% giờ',
+    d: '1 ngày',
+    dd(number) {
+      if (number < 7) {
+        return `${number} ngày`;
+      }
+      const weeks = Math.round(number / 7);
+      return `${weeks} tuần`;
+    },
+    M: '1 tháng',
+    MM: '% tháng',
+    y: '1 năm',
+    yy: '% năm',
+  },
+};

@@ -1,7 +1,3 @@
-
-export * from './use-info.model';
-
-
 export * from './register-page-content.model';
 export * from './day-of-week.model';
 export * from './login-page-content.model';
@@ -11,4 +7,6 @@ export * from './toto-link.model';
 export * from './system-config.model';
 export * from './hero-slider.model';
 export * from './user-profile.model';
-
+export * from './post-user-comment-reply.model';
+export * from './post.model';
+export * from './post-user-comment-response.model';

@@ -1,8 +1,10 @@
 import React from 'react';
 import { IHomePageProps } from './home.type';
-import { TopNav, Post, VirtualListContent, Button } from '../../components';
+import { TopNav, Button } from '../../components';
 import { asideLeftContentMock, asideRightContentMock } from './mocks';
 import { Helmet } from 'react-helmet-async';
+import { NewFeedView } from './views/new-feed';
+import { observer } from 'mobx-react';
 
 const classNamePrefix = 'tt-home-page';
 
@@ -55,7 +57,7 @@ const iconAwardFilled = (
   </svg>
 );
 
-export const HomePage: React.FC<IHomePageProps> = () => {
+export const HomePage: React.FC<IHomePageProps> = observer((props) => {
   return (
     <div className="toto-home-page">
       <Helmet>
@@ -114,11 +116,7 @@ export const HomePage: React.FC<IHomePageProps> = () => {
                 </ul>
               </section>
             </aside>
-            <main className="w-full lg:w-[586px]">
-              <VirtualListContent>
-                <Post />
-              </VirtualListContent>
-            </main>
+            <NewFeedView />
             <aside
               className="hidden lg:block flex-1 sticky top-20 overflow-y-auto"
               style={{ height: 'calc(100vh - 64px)' }}
@@ -217,7 +215,7 @@ export const HomePage: React.FC<IHomePageProps> = () => {
                           asideRightContentMock?.hashtags.map((hashtag, index) => {
                             return (
                               <a
-                                key={index}
+                                key={Math.random().toString(36).substring(2, 15)}
                                 className="rounded-2xl bg-zinc-200 dark:bg-zinc-700 text-xs px-3 py-2 mr-2 mb-2 transition duration-300 hover:bg-brand-500 hover:dark:bg-brand-500 hover:text-white"
                                 href="/t/name"
                               >
@@ -236,4 +234,4 @@ export const HomePage: React.FC<IHomePageProps> = () => {
       </div>
     </div>
   );
-};
+});
