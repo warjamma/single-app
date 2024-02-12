@@ -1,7 +1,9 @@
+/* eslint-disable react/jsx-indent */
 import React, { useEffect, useState } from 'react';
 import { IPostProps } from './post.type';
 import { Button } from '../button';
 import dayjs from 'dayjs';
+import { useModal } from '..';
 
 const classNamePrefix = 'tt-post-component';
 
@@ -11,6 +13,8 @@ export const Post: React.FC<IPostProps> = (props) => {
   const [isShowMoreMenu, setShowMoreMenu] = useState(false);
 
   const [isShowComment, setShowComment] = useState(false);
+
+  const { showModal, modalPlaceholder } = useModal();
 
   useEffect(() => {
     isShowComment && getComment && post?.id && getComment(post.id);
@@ -22,8 +26,61 @@ export const Post: React.FC<IPostProps> = (props) => {
      */
   };
 
+  const showModalPreviewImage = () => {
+    showModal({
+      title: 'Xem ảnh',
+      content: (
+        <div className="p-4">
+          <div className="flex flex-row h-[500px] w-[700px]">
+            <button title="leftClick">
+              <svg
+                xmlns="http://www.w3.org/2000/svg"
+                width={24}
+                height={24}
+                viewBox="0 0 24 24"
+                fill="none"
+                stroke="currentColor"
+                strokeWidth={2}
+                strokeLinecap="round"
+                strokeLinejoin="round"
+                className="tabler-icon tabler-icon-arrow-left "
+              >
+                <path d="M5 12l14 0" />
+                <path d="M5 12l6 6" />
+                <path d="M5 12l6 -6" />
+              </svg>
+            </button>
+            <div className="h-[500px] w-[700px]">
+              <img className="object-fit h-full w-full" src="https://loremflickr.com/320/240?lock=1830084794" alt="" />
+            </div>
+            <button title="rightClick">
+              <svg
+                xmlns="http://www.w3.org/2000/svg"
+                width={24}
+                height={24}
+                viewBox="0 0 24 24"
+                fill="none"
+                stroke="currentColor"
+                strokeWidth={2}
+                strokeLinecap="round"
+                strokeLinejoin="round"
+                className="tabler-icon tabler-icon-arrow-right "
+              >
+                <path d="M5 12l14 0" />
+                <path d="M13 18l6 -6" />
+                <path d="M13 6l6 6" />
+              </svg>
+            </button>
+          </div>
+        </div>
+      ),
+      className: 'lg:w-max lg:min-w-[40%]',
+    });
+  };
+
   return (
     <div className={`${classNamePrefix} mb-4 post-item item::8242946a-051c-42eb-87c0-deee675f689c`}>
+      {modalPlaceholder}
       <div className="rounded-xl flex transition duration-200 bg-gray-50 dark:bg-black flex-col">
         <div className="p-4">
           <div className="flex justify-between items-center">
@@ -172,7 +229,9 @@ export const Post: React.FC<IPostProps> = (props) => {
                     return (
                       <button key={Math.random().toString(36).substring(2, 15)} className="relative block rounded-md">
                         <div className="absolute z-[1] top-0 left-0 rounded-md w-full h-full bg-black/50 text-white font-medium backdrop-blur p-4">
-                          <div className="h-full flex justify-center items-center">Xem thêm</div>
+                          <div className="h-full flex justify-center items-center" onClick={showModalPreviewImage}>
+                            Xem thêm
+                          </div>
                         </div>
                         <img className="rounded-md object-cover w-full h-full " src={img} alt="" />
                       </button>
