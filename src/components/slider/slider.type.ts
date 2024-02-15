@@ -1,6 +1,12 @@
 export interface ISliderProps {
-  sliders?: ISlideItem[];
+  sliders?: string[];
+  type?: 'sliders' | 'only-image';
+  autoNext?: boolean;
 }
+
+/**
+ * TODO Handle Slide with item
+ */
 
 export interface ISlideItem {
   id: number | string;

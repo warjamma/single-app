@@ -61,14 +61,14 @@ export const MOMENT_UPDATE_LOCALE_EN = {
 
 export const MOMENT_UPDATE_LOCALE_VI = {
   relativeTime: {
-    future: 'in % giây',
-    past: '% giây',
+    future: 'in %giây',
+    past: '%s',
     s: '1 giây',
-    ss: '%d giây',
+    ss: '%d sec',
     m: '1 phút',
     mm: '%d phút',
     h: '1 giờ',
-    hh: '% giờ',
+    hh: '%dh',
     d: '1 ngày',
     dd(number) {
       if (number < 7) {
@@ -78,8 +78,8 @@ export const MOMENT_UPDATE_LOCALE_VI = {
       return `${weeks} tuần`;
     },
     M: '1 tháng',
-    MM: '% tháng',
+    MM: '%dm',
     y: '1 năm',
-    yy: '% năm',
+    yy: '%dy',
   },
 };

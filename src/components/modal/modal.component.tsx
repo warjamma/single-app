@@ -2,7 +2,7 @@ import React, { useEffect, useState } from 'react';
 import { LANGUAGE_CORE_UI_MODAL_NAMESPACE, ModalService } from './modal.service';
 import { IModal, IModalPlaceholder } from './modal.type';
 import { useLangTranslation } from '../../configuration';
-import { LazyLoadImage } from 'react-lazy-load-image-component';
+import { LazyLoadImage } from '../lazy-load-image';
 
 export const Modal: React.FC<IModal> = (props) => {
   const {

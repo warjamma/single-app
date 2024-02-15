@@ -3,7 +3,7 @@ import React, { useEffect, useState } from 'react';
 import { IPostProps } from './post.type';
 import { Button } from '../button';
 import dayjs from 'dayjs';
-import { useModal } from '..';
+import { Slider, useModal } from '..';
 
 const classNamePrefix = 'tt-post-component';
 
@@ -28,52 +28,8 @@ export const Post: React.FC<IPostProps> = (props) => {
 
   const showModalPreviewImage = () => {
     showModal({
-      title: 'Xem ảnh',
-      content: (
-        <div className="p-4">
-          <div className="flex flex-row h-[500px] w-[700px]">
-            <button title="leftClick">
-              <svg
-                xmlns="http://www.w3.org/2000/svg"
-                width={24}
-                height={24}
-                viewBox="0 0 24 24"
-                fill="none"
-                stroke="currentColor"
-                strokeWidth={2}
-                strokeLinecap="round"
-                strokeLinejoin="round"
-                className="tabler-icon tabler-icon-arrow-left "
-              >
-                <path d="M5 12l14 0" />
-                <path d="M5 12l6 6" />
-                <path d="M5 12l6 -6" />
-              </svg>
-            </button>
-            <div className="h-[500px] w-[700px]">
-              <img className="object-fit h-full w-full" src="https://loremflickr.com/320/240?lock=1830084794" alt="" />
-            </div>
-            <button title="rightClick">
-              <svg
-                xmlns="http://www.w3.org/2000/svg"
-                width={24}
-                height={24}
-                viewBox="0 0 24 24"
-                fill="none"
-                stroke="currentColor"
-                strokeWidth={2}
-                strokeLinecap="round"
-                strokeLinejoin="round"
-                className="tabler-icon tabler-icon-arrow-right "
-              >
-                <path d="M5 12l14 0" />
-                <path d="M13 18l6 -6" />
-                <path d="M13 6l6 6" />
-              </svg>
-            </button>
-          </div>
-        </div>
-      ),
+      title: post?.title,
+      content: <Slider sliders={post?.imageUrls} />,
       className: 'lg:w-max lg:min-w-[40%]',
     });
   };
@@ -100,7 +56,7 @@ export const Post: React.FC<IPostProps> = (props) => {
                   <a className="text-branding font-semibold mr-2" href="/c/a">
                     Công nghệ
                   </a>{' '}
-                  <span>•</span> <span>{dayjs(post?.updatedAt).fromNow()} trước</span> <span>•</span>{' '}
+                  <span>•</span> <span>{dayjs(post?.updatedAt).fromNow()} trước</span> <span />
                   <button>
                     <i className="fas fa-trophy" />
                   </button>
@@ -215,7 +171,7 @@ export const Post: React.FC<IPostProps> = (props) => {
               post.hashtags.map((ht, index) => {
                 return (
                   <li className="mr-1" key={post?.hashtag_Ids?.[index]}>
-                    <a href={`/hashtag/${post?.hashtag_Ids?.[index]}`}>{ht}</a>
+                    <a href={`/hashtag/${post?.hashtag_Ids?.[index]}`}>#{ht}</a>
                   </li>
                 );
               })}
