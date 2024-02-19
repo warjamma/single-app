@@ -1,8 +1,10 @@
 import React from 'react';
 import { IHomePageProps } from './home.type';
-import { TopNav, Post, VirtualListContent, Button } from '../../components';
+import { TopNav, Button, Slider } from '../../components';
 import { asideLeftContentMock, asideRightContentMock } from './mocks';
 import { Helmet } from 'react-helmet-async';
+import { NewFeedView } from './views/new-feed';
+import { observer } from 'mobx-react';
 
 const classNamePrefix = 'tt-home-page';
 
@@ -55,7 +57,7 @@ const iconAwardFilled = (
   </svg>
 );
 
-export const HomePage: React.FC<IHomePageProps> = () => {
+export const HomePage: React.FC<IHomePageProps> = observer((props) => {
   return (
     <div className="toto-home-page">
       <Helmet>
@@ -114,11 +116,7 @@ export const HomePage: React.FC<IHomePageProps> = () => {
                 </ul>
               </section>
             </aside>
-            <main className="w-full lg:w-[586px]">
-              <VirtualListContent>
-                <Post />
-              </VirtualListContent>
-            </main>
+            <NewFeedView />
             <aside
               className="hidden lg:block flex-1 sticky top-20 overflow-y-auto"
               style={{ height: 'calc(100vh - 64px)' }}
@@ -129,41 +127,11 @@ export const HomePage: React.FC<IHomePageProps> = () => {
                     <div className="p-4">
                       <div className="text-lg font-bold ">Nổi bật</div>
                     </div>
-                    <div
-                      className="splide splide--slide splide--ltr splide--draggable is-active is-overflow is-initialized"
-                      aria-label="My Favorite Images"
-                      id="splide02"
-                      role="region"
-                      aria-roledescription="carousel"
-                    >
-                      <div
-                        className="splide__track splide__track--slide splide__track--ltr splide__track--draggable"
-                        id="splide02-track"
-                        aria-live="polite"
-                        aria-atomic="true"
-                        style={{ paddingLeft: '0px', paddingRight: '0px' }}
-                      >
-                        <ul
-                          className="splide__list"
-                          id="splide02-list"
-                          role="presentation"
-                          style={{ transform: 'translateX(0px)' }}
-                        >
-                          <li
-                            className="splide__slide is-active is-visible"
-                            id="splide02-slide01"
-                            role="group"
-                            aria-roledescription="slide"
-                            aria-label="1 of 3"
-                            style={{ width: 'calc(100%)' }}
-                          >
-                            <img src="https://picsum.photos/id/100/2500/1656.jpg" alt="Slide" />{' '}
-                          </li>
-                          {/* <li className="splide__slide is-next" id="splide02-slide02" role="group" aria-roledescription="slide" aria-label="2 of 3" aria-hidden="true" style={{ width: 'calc(100%)' }}><img src="https://picsum.photos/id/1000/2500/1656.jpg" alt="Slide" /> </li>
-                        <li className="splide__slide" id="splide02-slide03" role="group" aria-roledescription="slide" aria-label="3 of 3" aria-hidden="true" style={{ width: 'calc(100%)' }}><img src="https://picsum.photos/id/1001/2500/1656.jpg" alt="Slide" /> </li> */}
-                        </ul>
-                      </div>
-                    </div>
+                    <Slider
+                      sliders={asideRightContentMock?.slides?.map((slider) => slider.imageUrl) as string[]}
+                      type="only-image"
+                      autoNext
+                    />
                   </div>
                 </section>
                 <section>
@@ -217,7 +185,7 @@ export const HomePage: React.FC<IHomePageProps> = () => {
                           asideRightContentMock?.hashtags.map((hashtag, index) => {
                             return (
                               <a
-                                key={index}
+                                key={Math.random().toString(36).substring(2, 15)}
                                 className="rounded-2xl bg-zinc-200 dark:bg-zinc-700 text-xs px-3 py-2 mr-2 mb-2 transition duration-300 hover:bg-brand-500 hover:dark:bg-brand-500 hover:text-white"
                                 href="/t/name"
                               >
@@ -236,4 +204,4 @@ export const HomePage: React.FC<IHomePageProps> = () => {
       </div>
     </div>
   );
-};
+});

@@ -5,6 +5,9 @@ import { SystemConfigStore } from './store';
 import { initWuiLoginLanguage } from './languages';
 import { RouterProvider } from 'react-router-dom';
 import { RouterLinks } from './routes';
+import dayjs from 'dayjs';
+import { MOMENT_UPDATE_LOCALE_VI } from './constants/configuration.constant';
+import updateLocale from 'dayjs/plugin/updateLocale';
 
 initWuiLoginLanguage();
 
@@ -16,6 +19,15 @@ const Root = () => {
       LangService.instance().changeLanguage(defaultLanguage);
     }
   }, [defaultLanguage]);
+
+  useEffect(() => {
+    /**
+     * TODO:  When changing languages, remember to updateLocale according to the corresponding language
+     */
+    dayjs.extend(updateLocale);
+
+    dayjs.updateLocale('en', MOMENT_UPDATE_LOCALE_VI);
+  }, []);
 
   return <RouterProvider router={RouterLinks} fallbackElement={<p>Initial·Load...</p>} />;
 };
