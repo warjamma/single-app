@@ -59,6 +59,19 @@ export const Modal: React.FC<IModal> = (props) => {
     }
   };
 
+  useEffect(() => {
+    const handleEsc = (event) => {
+      if (event.key === 'Escape') {
+        close();
+      }
+    };
+    window.addEventListener('keydown', handleEsc);
+
+    return () => {
+      window.removeEventListener('keydown', handleEsc);
+    };
+  }, []);
+
   return (
     <div
       className={`toto-modal ${
@@ -173,6 +186,8 @@ export const ModalPlaceholder: React.FC<IModalPlaceholder> = (props) => {
   const { uuid } = props;
   const [modal, setModal] = useState<IModal | null>(null);
 
+  // eslint-disable-next-line no-console
+  console.log('hack', ModalService);
   useEffect(() => {
     const subscription = ModalService.ModalServiceSubject().subscribe((data) => {
       if (data && uuid && data[uuid]) {

@@ -42,7 +42,7 @@ export const Slider: React.FC<ISliderProps> = (props) => {
             <button
               title="leftClick"
               onClick={() => handleNextSlider(-1)}
-              className={imgIndexCurrent === 0 ? 'invisible' : 'visible'}
+              // className={imgIndexCurrent === 0 ? 'invisible' : 'visible'}
             >
               <svg
                 xmlns="http://www.w3.org/2000/svg"
@@ -73,7 +73,7 @@ export const Slider: React.FC<ISliderProps> = (props) => {
             <button
               title="rightClick"
               onClick={() => handleNextSlider(1)}
-              className={imgIndexCurrent === sliders.length - 1 ? 'invisible' : 'visible'}
+              // className={imgIndexCurrent === sliders.length - 1 ? 'invisible' : 'visible'}
             >
               <svg
                 xmlns="http://www.w3.org/2000/svg"
