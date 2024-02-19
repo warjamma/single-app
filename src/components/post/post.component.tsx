@@ -29,7 +29,12 @@ export const Post: React.FC<IPostProps> = (props) => {
   const showModalPreviewImage = () => {
     showModal({
       title: post?.title,
-      content: <Slider sliders={post?.imageUrls} />,
+      content: (
+        <>
+          <div className="pl-4 pr-4 line-clamp-1">{`#${post?.hashtags?.join('#')}`}</div>
+          <Slider sliders={post?.imageUrls} />
+        </>
+      ),
       className: 'lg:w-max lg:min-w-[40%]',
     });
   };
@@ -194,7 +199,11 @@ export const Post: React.FC<IPostProps> = (props) => {
                     );
 
                   return (
-                    <button key={Math.random().toString(36).substring(2, 15)} className="relative block rounded-md">
+                    <button
+                      key={Math.random().toString(36).substring(2, 15)}
+                      className="relative block rounded-md"
+                      onClick={showModalPreviewImage}
+                    >
                       <img className="rounded-md h-full object-cover " src={img} alt="" />
                     </button>
                   );
