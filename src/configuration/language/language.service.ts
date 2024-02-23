@@ -131,7 +131,6 @@ export class LangService {
 
   public hasLocalLanguage(): boolean {
     const localLanguage = LocalStorageService.getItem(LOCAL_LANG_KEY);
-    console.log('hack', localLanguage);
     return !!localLanguage;
   }
 }

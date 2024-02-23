@@ -5,3 +5,4 @@ export * from './use-verify-phone';
 export * from './use-ui-content';
 export * from './use-system-config';
 export * from './use-dark-mode';
+export * from './use-post';

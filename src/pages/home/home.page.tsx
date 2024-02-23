@@ -1,10 +1,11 @@
 import React from 'react';
 import { IHomePageProps } from './home.type';
-import { TopNav, Button, Slider } from '../../components';
+import { TopNav, Button, Slider, LoadingMore, Post } from '../../components';
 import { asideLeftContentMock, asideRightContentMock } from './mocks';
 import { Helmet } from 'react-helmet-async';
-import { NewFeedView } from './views/new-feed';
 import { observer } from 'mobx-react';
+import InfiniteScroll from 'react-infinite-scroll-component';
+import { usePost } from '../../hooks';
 
 const classNamePrefix = 'tt-home-page';
 
@@ -58,6 +59,8 @@ const iconAwardFilled = (
 );
 
 export const HomePage: React.FC<IHomePageProps> = observer((props) => {
+  const { postItems, commentItems, isEndFetchingPost, fetchPost, fetchComment } = usePost();
+
   return (
     <div className="toto-home-page">
       <Helmet>
@@ -116,7 +119,21 @@ export const HomePage: React.FC<IHomePageProps> = observer((props) => {
                 </ul>
               </section>
             </aside>
-            <NewFeedView />
+            <div className="toto-new-feed">
+              <main className="w-full lg:w-[586px]">
+                <InfiniteScroll
+                  dataLength={postItems?.length || 0}
+                  next={fetchPost}
+                  hasMore={isEndFetchingPost}
+                  loader={<LoadingMore />}
+                  endMessage={<p>No more data to load.</p>}
+                >
+                  {postItems?.map((post) => {
+                    return <Post key={post.id} post={post} getComment={fetchComment} comments={commentItems} />;
+                  })}
+                </InfiniteScroll>
+              </main>
+            </div>
             <aside
               className="hidden lg:block flex-1 sticky top-20 overflow-y-auto"
               style={{ height: 'calc(100vh - 64px)' }}
