@@ -1,7 +1,9 @@
 import { useObserver } from 'mobx-react';
 import { CorePostStore } from '../../store';
-import { useEffect } from 'react';
+import { useCallback, useEffect } from 'react';
 import { FetchPostParams } from '../../models';
+
+const LIMIT_LOAD_ITEMS_POST = 15;
 
 export const usePost = () => {
   const postItems = useObserver(() => CorePostStore.postSelector());
@@ -12,26 +14,28 @@ export const usePost = () => {
   const commentItems = useObserver(() => CorePostStore.commentSelector());
   const isLoadingComment = useObserver(() => CorePostStore.isFetchingCommentSelector());
 
-  async function fetchPost() {
+  const fetchPost = useCallback(() => {
     let params: FetchPostParams;
 
     if (!paramsPost) {
-      params = { pageSize: 10, pageNumber: 1 };
+      params = { pageSize: LIMIT_LOAD_ITEMS_POST, pageNumber: 1 };
     } else {
       params = {
-        pageNumber: 1,
-        pageSize: (paramsPost?.pageSize ?? 10) + 1,
+        pageNumber: (paramsPost?.pageNumber ?? 1) + 1,
+        pageSize: paramsPost?.pageSize,
       };
     }
 
-    const { pageSize = 10, pageNumber = 1 } = params;
+    const { pageSize = LIMIT_LOAD_ITEMS_POST, pageNumber = 1 } = params;
 
     CorePostStore.fetchPostAction(pageSize, pageNumber);
-  }
+  }, [paramsPost]);
 
-  async function fetchComment(postId: string) {
+  const fetchComment = useCallback((postId: string) => {
+    if (!postId) return;
+
     CorePostStore.fetchCommentAction(postId);
-  }
+  }, []);
 
   useEffect(() => {
     fetchPost();
