@@ -15,7 +15,6 @@ export const NewFeedView: React.FC<INewFeedViewProps> = observer(() => {
           dataLength={postItems?.length || 0}
           next={fetchPost}
           hasMore={isEndFetchingPost}
-          scrollThreshold={1}
           loader={<LoadingMore />}
           endMessage={<p>No more data to load.</p>}
         >
