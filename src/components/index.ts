@@ -6,3 +6,4 @@ export * from './button';
 export * from './toast';
 export * from './modal';
 export * from './lazy-load-image';
+export * from './loading-more';

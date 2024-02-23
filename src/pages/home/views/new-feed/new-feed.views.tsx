@@ -1,52 +1,28 @@
-import React, { useCallback, useEffect, useState } from 'react';
-import { Post, VirtualListContent } from '../../../../components';
+import React from 'react';
+import { LoadingMore, Post } from '../../../../components';
 import { INewFeedViewProps } from './new-feed.type';
-import { IPostModel, IUserCommentResponse } from '../../../../models';
 import { observer } from 'mobx-react';
-import { CoreLoadingStore, CommonMessageStore } from '../../../../store';
-import { fetchCommentsApi, fetchPostsApi } from '../../../../api';
+import InfiniteScroll from 'react-infinite-scroll-component';
+import { usePost } from '../../../../hooks';
 
 export const NewFeedView: React.FC<INewFeedViewProps> = observer(() => {
-  const [posts, setPosts] = useState<IPostModel[]>([]);
-
-  const [comments, setComment] = useState<IUserCommentResponse[]>([]);
-
-  const getPostsApi = useCallback(() => {
-    CoreLoadingStore.updateLoadingAction(true);
-    setPosts([]);
-
-    fetchPostsApi()
-      .then((response) => {
-        setPosts(response);
-      })
-      .catch(CommonMessageStore.updateErrorAction)
-      .finally(() => CoreLoadingStore.updateLoadingAction(false));
-  }, []);
-
-  const getCommentApi = useCallback((id: string) => {
-    CoreLoadingStore.updateLoadingAction(true);
-    setComment([]);
-
-    fetchCommentsApi(id)
-      .then((response) => {
-        setComment(response);
-      })
-      .catch(CommonMessageStore.updateErrorAction)
-      .finally(() => CoreLoadingStore.updateLoadingAction(false));
-  }, []);
-
-  useEffect(() => {
-    getPostsApi();
-  }, []);
+  const { postItems, commentItems, isEndFetchingPost, fetchPost, fetchComment } = usePost();
 
   return (
     <div className="toto-new-feed">
       <main className="w-full lg:w-[586px]">
-        <VirtualListContent>
-          {posts.map((post) => {
-            return <Post key={post.id} post={post} getComment={getCommentApi} comments={comments} />;
+        <InfiniteScroll
+          dataLength={postItems?.length || 0}
+          next={fetchPost}
+          hasMore={isEndFetchingPost}
+          scrollThreshold={1}
+          loader={<LoadingMore />}
+          endMessage={<p>No more data to load.</p>}
+        >
+          {postItems?.map((post) => {
+            return <Post key={post.id} post={post} getComment={fetchComment} comments={commentItems} />;
           })}
-        </VirtualListContent>
+        </InfiniteScroll>
       </main>
     </div>
   );

@@ -24,3 +24,8 @@ export interface IPostModel {
   voteDownCount: number;
   userCommentResponses: IUserCommentResponse[];
 }
+
+export type FetchPostParams = {
+  pageNumber?: number;
+  pageSize?: number;
+};

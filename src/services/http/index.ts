@@ -1,8 +1,8 @@
-import axios from "axios";
-import localStorageService from "../localStorage";
+import axios from 'axios';
+import localStorageService from '../localStorage';
 
 // use url from .env file
-const baseURL = "URL";
+const baseURL = 'URL';
 const axiosInstance = axios.create({
   baseURL,
 });
@@ -11,7 +11,7 @@ const axiosInstance = axios.create({
 axiosInstance.interceptors.request.use(
   (config) => {
     // Add bearer token to the headers if available and where store token
-    const bearerToken = localStorageService.get("accessToken");
+    const bearerToken = localStorageService.get('accessToken');
     if (bearerToken) {
       config.headers.Authorization = `Bearer ${bearerToken}`;
     }
@@ -19,7 +19,7 @@ axiosInstance.interceptors.request.use(
   },
   (error) => {
     return Promise.reject(error);
-  }
+  },
 );
 
 // interceptors response
@@ -27,7 +27,7 @@ axiosInstance.interceptors.response.use(
   (response) => response,
   (error) => {
     return Promise.reject(error);
-  }
+  },
 );
 
 const httpService = {
@@ -36,33 +36,25 @@ const httpService = {
       const response = await axiosInstance.get<T>(url, config);
       return response.data;
     } catch (error) {
-      console.error("HTTP GET Error:", error);
+      console.error('HTTP GET Error:', error);
     }
   },
 
-  post: async <T>(
-    url: string,
-    data: any,
-    config?: any
-  ): Promise<T | undefined> => {
+  post: async <T>(url: string, data: any, config?: any): Promise<T | undefined> => {
     try {
       const response = await axiosInstance.post<T>(url, data, config);
       return response.data;
     } catch (error) {
-      console.error("HTTP POST Error:", error);
+      console.error('HTTP POST Error:', error);
     }
   },
 
-  put: async <T>(
-    url: string,
-    data: any,
-    config?: any
-  ): Promise<T | undefined> => {
+  put: async <T>(url: string, data: any, config?: any): Promise<T | undefined> => {
     try {
       const response = await axiosInstance.put<T>(url, data, config);
       return response.data;
     } catch (error) {
-      console.error("HTTP PUT Error:", error);
+      console.error('HTTP PUT Error:', error);
     }
   },
 
@@ -71,7 +63,7 @@ const httpService = {
       const response = await axiosInstance.delete<T>(url, config);
       return response.data;
     } catch (error) {
-      console.error("HTTP DELETE Error:", error);
+      console.error('HTTP DELETE Error:', error);
     }
   },
 };
