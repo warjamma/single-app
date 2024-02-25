@@ -126,7 +126,7 @@ export const HomePage: React.FC<IHomePageProps> = observer((props) => {
                   next={fetchPost}
                   hasMore={isEndFetchingPost}
                   loader={<LoadingMore />}
-                  endMessage={<p>No more data to load.</p>}
+                  endMessage={<div className="text-center">Không còn dữ liệu.</div>}
                 >
                   {postItems?.map((post) => {
                     return <Post key={post.id} post={post} getComment={fetchComment} comments={commentItems} />;
