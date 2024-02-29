@@ -31,4 +31,3 @@ jobs:
       IMAGE: ${{ needs.variables.outputs.IMAGE }}
       INGRESS_IP: ${{ needs.variables.outputs.INGRESS_IP }}
       DOT_ENV_FILE_NAME: ${{ needs.variables.outputs.DOT_ENV_FILE_NAME }}
-
