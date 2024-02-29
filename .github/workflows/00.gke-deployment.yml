@@ -14,23 +14,11 @@ on:
       DOT_ENV_FILE_NAME:
         required: true
         type: string
-      SERVER_USER:
-        required: true
-        type: string
-      SERVER_PORT:
-        required: true
-        type: string
-      SERVER_DEST_PATH:
-        required: true
-        type: string
 env:
   DEPLOYMENT_NAME: ${{ inputs.DEPLOYMENT_NAME }}
   IMAGE: ${{ inputs.IMAGE }}
   INGRESS_IP: ${{ inputs.INGRESS_IP }}
   DOT_ENV_FILE_NAME: ${{ inputs.DOT_ENV_FILE_NAME }}
-  INGRESS_USER: ${{ inputs.INGRESS_USER }}
-  INGRESS_PORT: ${{ inputs.INGRESS_PORT }}
-  INGRESS_DEST_PATH: ${{ inputs.INGRESS_DEST_PATH }}
 jobs:
   setup-build-publish-deploy:
     name: Setup, Build, Publish, and Deploy
@@ -61,17 +49,8 @@ jobs:
         run: ./deploy/nginx.default.conf.sh "$INGRESS_IP" > ./nginx/conf.d/default.conf
       - name: Generate nginx configuration file setting
         run: ./deploy/nginx.conf.sh > ./nginx/nginx.conf
-      # Build
-      - name: Configure SSH
-        run: |
-          mkdir -p ~/.ssh
-          echo "${{ secrets.SSH_PRIVATE_KEY }}" | tr -d '\r' > ~/.ssh/id_rsa
-          chmod 600 ~/.ssh/id_rsa
-          echo "StrictHostKeyChecking no" >> ~/.ssh/config
-      # Deploy
-      - name: Deploy
-        run: |
-          rsync -avz -e "ssh -o StrictHostKeyChecking=no" --progress /home/runner/work/cab-client/cab-client/ $INGRESS_USER@$INGRESS_IP:$INGRESS_DEST_PATH
-          ssh -o StrictHostKeyChecking=no $INGRESS_USER@$INGRESS_IP 'sudo systemctl restart cab-client.service' || exit 1
-          ssh -o StrictHostKeyChecking=no $INGRESS_USER@$INGRESS_IP 'sudo systemctl status cab-client.service' || exit 1
+        
+      # Build the Docker image
+      # - name: Publish
+      # - name: Deploy
    

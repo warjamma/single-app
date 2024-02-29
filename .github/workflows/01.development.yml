@@ -10,9 +10,6 @@ env:
   IMAGE: cab-client
   INGRESS_IP: 35.186.147.166
   DOT_ENV_FILE_NAME: .env.develop
-  SERVER_USER: ubuntu
-  SERVER_PORT: 22
-  SERVER_DEST_PATH: /home/ubuntu/cab-client
 jobs:
   variables:
     name: setup variable
@@ -22,9 +19,6 @@ jobs:
       IMAGE: ${{ env.IMAGE }}
       INGRESS_IP: ${{ env.INGRESS_IP }}
       DOT_ENV_FILE_NAME: ${{ env.DOT_ENV_FILE_NAME }}
-      SERVER_USER: ${{ env.SERVER_USER }}
-      SERVER_PORT: ${{ env.SERVER_PORT }}
-      SERVER_DEST_PATH: ${{ env.SERVER_DEST_PATH }}
     steps:
       - name: Echo
         run: echo prepare variable
@@ -37,7 +31,3 @@ jobs:
       IMAGE: ${{ needs.variables.outputs.IMAGE }}
       INGRESS_IP: ${{ needs.variables.outputs.INGRESS_IP }}
       DOT_ENV_FILE_NAME: ${{ needs.variables.outputs.DOT_ENV_FILE_NAME }}
-      SERVER_USER: ${{ needs.variables.outputs.SERVER_USER }}
-      SERVER_PORT: ${{ needs.variables.outputs.SERVER_PORT }}
-      SERVER_DEST_PATH: ${{ needs.variables.outputs.SERVER_DEST_PATH }}
-
