@@ -59,7 +59,6 @@ jobs:
 
       - name: Publish to Docker
         run: |-
-          docker tag cab-client:latest lgold141@gmail.com/deploy-nginx:0.2
           docker tag cab-client:latest warjamma/cab-client-2024:latest
           docker push warjamma/cab-client-2024:latest        
       - name: Configure SSH
