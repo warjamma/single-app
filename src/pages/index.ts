@@ -5,3 +5,4 @@ export * from '../components';
 export * from './login';
 export * from './register';
 export * from './gate';
+export * from './notification';

@@ -1,5 +1,5 @@
 import { createBrowserRouter } from 'react-router-dom';
-import { HomePage, LoginPage, RegisterPage, ProfilePage, GatePage, NotFoundPage } from '../pages';
+import { HomePage, LoginPage, RegisterPage, ProfilePage, GatePage, NotFoundPage, NotificationPage } from '../pages';
 
 /* your routes here */
 export const RouterLinks = createBrowserRouter([
@@ -22,6 +22,10 @@ export const RouterLinks = createBrowserRouter([
   {
     path: '/gate',
     Component: GatePage,
+  },
+  {
+    path: '/notifications',
+    Component: NotificationPage,
   },
   {
     path: '*',
