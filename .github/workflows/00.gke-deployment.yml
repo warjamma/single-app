@@ -49,8 +49,28 @@ jobs:
         run: ./deploy/nginx.default.conf.sh "$INGRESS_IP" > ./nginx/conf.d/default.conf
       - name: Generate nginx configuration file setting
         run: ./deploy/nginx.conf.sh > ./nginx/nginx.conf
-        
+
       # Build the Docker image
-      # - name: Publish
-      # - name: Deploy
-   
+      - name: Build
+        run: |-
+          docker build -t "$IMAGE" .
+      - name: Login docker
+        run: docker login -u lgold141@gmail.com -p thanhquang96   
+
+      - name: Publish to Docker
+        run: |-
+          docker tag cab-client:latest lgold141@gmail.com/deploy-nginx:0.2
+          docker tag cab-client:latest cab-client-2024:latest
+          docker push cab-client-2024:latest
+        
+      - name: Configure SSH
+        run: |
+          mkdir -p ~/.ssh
+          echo "${{ secrets.SSH_PRIVATE_KEY }}" | tr -d '\r' > ~/.ssh/id_rsa
+          chmod 600 ~/.ssh/id_rsa
+          echo "StrictHostKeyChecking no" >> ~/.ssh/config
+      - name: Deploy
+        run: |
+          rsync -avz -e "ssh -o StrictHostKeyChecking=no" --progress /home/runner/work/cab-client-2024/cab-client-2024/ $SERVER_USER@$SERVER_IP:$SERVER_DEST_PATH
+          ssh -o StrictHostKeyChecking=no $SERVER_USER@$SERVER_IP 'sudo docker pull cab-client-2024/deploy-nginx' || exit 1
+          ssh -o StrictHostKeyChecking=no $SERVER_USER@$SERVER_IP 'sudo docker run -d -p 80:80 --name cab-client-container cab-client-2024/deploy-nginx' || exit 1
