@@ -1,11 +1,12 @@
 import React from 'react';
 import { IHomePageProps } from './home.type';
-import { TopNav, Button, Slider, LoadingMore, Post } from '../../components';
+import { Button, Slider, LoadingMore, Post } from '../../components';
 import { asideLeftContentMock, asideRightContentMock } from './mocks';
 import { Helmet } from 'react-helmet-async';
 import { observer } from 'mobx-react';
 import InfiniteScroll from 'react-infinite-scroll-component';
 import { usePost } from '../../hooks';
+import { TopNav } from '../../views';
 
 const classNamePrefix = 'tt-home-page';
 

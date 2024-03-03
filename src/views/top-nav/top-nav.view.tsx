@@ -1,14 +1,15 @@
 import React, { useState } from 'react';
 import { ITopNavProps } from './top-nav.type';
-import { Button } from '../button';
 import { CoreAuthenticationStore, CoreUserProfileStore } from '../../store';
 import { useObserver } from 'mobx-react';
 import { useDarkMode } from '../../hooks';
 import { useNavigate } from 'react-router-dom';
-import { NotificationPopup } from '../../pages/notification/components';
+import { Button } from '../../components';
+import { NotificationPopup } from './components/notification-popup/notification-popup.component';
 
 export const TopNav: React.FC<ITopNavProps> = () => {
   const [isShowExtendMenu, setShowExtendMenu] = useState<boolean>(false);
+
   const [isShowNotifyPopup, setShowNotifyPopup] = useState<boolean>(false);
 
   const { theme, toggleTheme } = useDarkMode();

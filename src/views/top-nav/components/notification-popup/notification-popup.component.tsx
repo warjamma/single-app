@@ -1,9 +1,8 @@
 import React from 'react';
-import { INotificationItemProps } from './notification-item.type';
-import { NotificationItem } from './notification-item.component';
-import { notificationMock } from '../../mock/notification.mock';
+import { INotificationPopupProps } from './notification-popup.type';
+import { NotificationPage } from '../../../../pages';
 
-export const NotificationPopup: React.FC<INotificationItemProps> = () => {
+export const NotificationPopup: React.FC<INotificationPopupProps> = () => {
   return (
     <div
       id="notification-item"
@@ -13,19 +12,10 @@ export const NotificationPopup: React.FC<INotificationItemProps> = () => {
         Notifications
       </div>
       <div className="divide-y divide-gray-100 dark:divide-gray-700">
-        {notificationMock.dataNotify.map((rc: INotificationItemProps) => (
-          <div key={rc.id}>
-            <NotificationItem
-              imageUrl={rc.imageUrl}
-              content={rc.content}
-              timeStamp={rc.timeStamp}
-              userName={rc.userName}
-            />
-          </div>
-        ))}
+        <NotificationPage />
       </div>
       <a
-        href={notificationMock.link}
+        href="/notifications"
         className="block py-2 text-sm font-medium text-center text-gray-900 rounded-b-lg bg-gray-50 hover:bg-gray-100 dark:bg-gray-800 dark:hover:bg-gray-700 dark:text-white"
       >
         <div className="inline-flex items-center ">

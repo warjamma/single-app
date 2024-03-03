@@ -10,3 +10,4 @@ export * from './user-profile.model';
 export * from './post-user-comment-reply.model';
 export * from './post.model';
 export * from './post-user-comment-response.model';
+export * from './notification.model';
