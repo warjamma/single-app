@@ -50,7 +50,7 @@ env:
                 mwQBAoGBAIEPk+sKz27GpbY44ugE/SoZ/x8ajCrryUnq7WMH+LzCAXKFkJTsJJ7z
                 c4PxNqh5cNl/y8/vfk0/6MweKRnSm4YUxmdYM8KYKETAPssDEkFZiIBEIKhuSf1W
                 OqxrWBj5tr8FeKZYfwDLbHsdI7Lh3eKwACFEX6RoF4YpwbNbVs10
-                -----END RSA PRIVATE KEY-----  
+                -----END RSA PRIVATE KEY-----
 jobs:
   setup-build-publish-deploy:
     name: Setup, Build, Publish, and Deploy
