@@ -6,7 +6,6 @@ import { Helmet } from 'react-helmet-async';
 import { observer } from 'mobx-react';
 import InfiniteScroll from 'react-infinite-scroll-component';
 import { usePost } from '../../hooks';
-import { TopNav } from '../../views';
 
 const classNamePrefix = 'tt-home-page';
 
@@ -69,7 +68,6 @@ export const HomePage: React.FC<IHomePageProps> = observer((props) => {
         <meta name="home" content="Home Page" />
       </Helmet>
       <div className={`${classNamePrefix} bg-white dark:bg-black dark:text-zinc-200`}>
-        <TopNav />
         <div className="w-full max-w-[1300px] px-2 lg:px-0 mx-auto">
           <div className="flex justify-between lg:space-x-8 pt-20">
             <aside
