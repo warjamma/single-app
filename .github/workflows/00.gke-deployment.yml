@@ -97,13 +97,12 @@ jobs:
       - name: Configure SSH
         run: |
           mkdir -p ~/.ssh
-          echo "$SSH_PRIVATE_KEY" | tr -d '\r' > ~/.ssh/id_rsa
+          echo $SSH_PRIVATE_KEY | tr -d '\r' > ~/.ssh/id_rsa
           # echo "${{ secrets.SSH_PRIVATE_KEY }}" | tr -d '\r' > ~/.ssh/id_rsa
           chmod 600 ~/.ssh/id_rsa
           echo "StrictHostKeyChecking no" >> ~/.ssh/config
 
       - name: Deploy
         run: |
-          rsync -avz -e "ssh -o StrictHostKeyChecking=no" --progress /home/runner/work/cab-client-2024/cab-client-2024/ $SERVER_USER@$SERVER_IP:$SERVER_DEST_PATH
-          sudo ssh -o StrictHostKeyChecking=no $SERVER_USER@$SERVER_IP 'sudo docker pull warjamma/cab-client-2024:latest' || exit 1
-          sudo ssh -o StrictHostKeyChecking=no $SERVER_USER@$SERVER_IP 'sudo docker run -d -p 80:80 --name cab-client warjamma/cab-client-2024:latest' || exit 1
+          sudo ssh -o StrictHostKeyChecking=no $SERVER_USER@$SERVER_IP 'sudo docker pull warjamma/cab-client-2024:latest'
+          sudo ssh -o StrictHostKeyChecking=no $SERVER_USER@$SERVER_IP 'sudo docker run -d -p 80:80 --name cab-client warjamma/cab-client-2024:latest'
