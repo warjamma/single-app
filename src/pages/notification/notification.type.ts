@@ -1,3 +1,3 @@
 export interface INotificationPageProps {
-  isRemoveShadow?:boolean
+  isDropdown?: boolean;
 }

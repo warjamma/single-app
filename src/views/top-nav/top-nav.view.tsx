@@ -26,7 +26,7 @@ export const TopNav: React.FC<ITopNavProps> = () => {
         <div className="flex justify-between items-center lg:space-x-8 h-12">
           <div className="flex items-center h-full">
             <a href="/" className="hidden lg:block w-max h-full lg:mr-4">
-              <img className="h-full w-auto" src="http://devcab.org/img/logo/cab.png" alt="CAB" />
+              <img className="h-full w-auto" src="https://about.cab.vn/cab.svg" alt="CAB" />
             </a>
             <form method="get">
               <div className="rounded-2xl hidden lg:flex space-x-2 items-center lg:w-[250px] bg-zinc-100 dark:bg-zinc-800 px-4 py-2">
