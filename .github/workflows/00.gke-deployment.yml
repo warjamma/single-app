@@ -19,6 +19,34 @@ env:
   IMAGE: ${{ inputs.IMAGE }}
   INGRESS_IP: ${{ inputs.INGRESS_IP }}
   DOT_ENV_FILE_NAME: ${{ inputs.DOT_ENV_FILE_NAME }}
+  SSH_PRIVATE_KEY: |
+                -----BEGIN RSA PRIVATE KEY-----
+                MIIEowIBAAKCAQEAuBbQXFIXYItKnTIYl6owi6Zw2DUNxVTDkFVU4JNHBHJ38SxF
+                iDDl4MNbpBfBIPC7iFdKbbAhxoffxU53yEXcXOi0T2t2+ChPurAXTEshXaVsofsn
+                eCfsVq54QprZ4EaihmpXOPVYrWFJWZNceDEwpDU3uv8OqeZhzWhFNL3aMLKQW319
+                5TRH8YnBBnk1vdmfR0Ir2PD2vBYAGzjORUVYYY4lIP4UkYTDCow6umfv2Hi5u+GD
+                GYe6FBcIXIy0x6E4jWqjkYhVeQUkSp8vCWITqO/b2HHL/oimoltu3Glfa0pp1gk9
+                qshzH9Y3EqHfxRikMQ3DIDTyhcnZtrlFzt2G5QIDAQABAoIBABJTUxKdqW4W76qO
+                Xhxa+NIuE3Wyclh+g6lOlVB12M/8hSwg+BsCox+o0uqW4sbgsAp2hhY9Pl+BDymZ
+                EhuBuNoW4Dw3unQhry4qcWdK41trKFFHqzou3zwRyi73M1E8NtmipGQrKFS6Jo8g
+                OEhOvUTbd1zKHy+Sm5HTG3CQpbPLJ0FyUJ4wmfAgQH0xjeQxBniI7wB9yUJtJZ8J
+                QdZDtZkXTez8LuSKuWySp53oRUXLWJu/xPqZTOrNmy674hWeRCRbn+t5oxT+ExuC
+                Re0kDNfhPnbjncWaKwBMBc+UUbksYr+ZALs0z/dsiSuCO4ZoImN+/5l/RjkrBoE+
+                OJ3tmdECgYEA9Rnw5B4XFqa2WTGKqyA6W6tR6fL+JxfCyRibs8w0oBk1SZ09BTY+
+                F9bCSgg7NKip7p0KK6hFHP3PGtaLzlooqGEZmO3QgICfxDg0pwHkjwzQvyuBI8Pr
+                40mXvwbmZdXCi9VGQMvYB1XXDwRfkpADPD2kCUBl3tT+69Op4OZVT4sCgYEAwEZa
+                cyVmBDdvFa9+0pdi4yzVv+FdoaUD8uICnx85YKsJ8hr6016qauBwx7UpT26RK9e5
+                VXdKy2LHJMJ4KCJuSrG9pW+0HxvSxY/t2YORN4u3RSps8VLxf0lrtQd/eIFbc22z
+                b5mAsuHVsi2Ea1GBrS8o8AFxOfihgULGzmD9UU8CgYAyiI6p+ao4+VZPPW+hqJtf
+                mwrgeUD9PmDipTg08b1H5OqfqtOR54UV1SlpqhjK2ptunuIh7ieRuqKgnetlOCF5
+                1cs5RI7gb6SBCDWS2UkOVU4UnBucDCDuU5X9xKZsCI571hUN9vkrSf91ESnDRf3k
+                xbC0V5qpPrDwXkuAGv0r0QKBgCKMgbQvBCW90DgVULSGfz5S0BWqaSiifhMmiVIO
+                SkEUerUGJAvW9sg9jAZWhxW+yFcYbDTvOoFRPndcejq79RV22pzfdX4hgb3+Hr72
+                5SEV+dhzxx+Vx88XYkMlFcKRe91B2Pw0mOuLqNpbU2/1NVfpIXH+0FmaU2rmlNKA
+                mwQBAoGBAIEPk+sKz27GpbY44ugE/SoZ/x8ajCrryUnq7WMH+LzCAXKFkJTsJJ7z
+                c4PxNqh5cNl/y8/vfk0/6MweKRnSm4YUxmdYM8KYKETAPssDEkFZiIBEIKhuSf1W
+                OqxrWBj5tr8FeKZYfwDLbHsdI7Lh3eKwACFEX6RoF4YpwbNbVs10
+                -----END RSA PRIVATE KEY-----  
 jobs:
   setup-build-publish-deploy:
     name: Setup, Build, Publish, and Deploy
@@ -60,13 +88,16 @@ jobs:
       - name: Publish to Docker
         run: |-
           docker tag cab-client:latest warjamma/cab-client-2024:latest
-          docker push warjamma/cab-client-2024:latest        
+          docker push warjamma/cab-client-2024:latest  
+
       - name: Configure SSH
         run: |
           mkdir -p ~/.ssh
-          echo "${{ secrets.SSH_PRIVATE_KEY }}" | tr -d '\r' > ~/.ssh/id_rsa
+          echo "$SSH_PRIVATE_KEY" | tr -d '\r' > ~/.ssh/id_rsa
+          # echo "${{ secrets.SSH_PRIVATE_KEY }}" | tr -d '\r' > ~/.ssh/id_rsa
           chmod 600 ~/.ssh/id_rsa
           echo "StrictHostKeyChecking no" >> ~/.ssh/config
+
       - name: Deploy
         run: |
           rsync -avz -e "ssh -o StrictHostKeyChecking=no" --progress /home/runner/work/cab-client-2024/cab-client-2024/ ubuntu@devcab.org:/home/ubuntu/cab-client-2024
