@@ -1,1 +1,3 @@
-export interface INotificationPageProps {}
+export interface INotificationPageProps {
+  isRemoveShadow?:boolean
+}

@@ -5,12 +5,12 @@ import InfiniteScroll from 'react-infinite-scroll-component';
 import { LoadingMore } from '../../components';
 import { useNotification } from './notification.hook';
 
-export const NotificationPage: React.FC<INotificationPageProps> = () => {
+export const NotificationPage: React.FC<INotificationPageProps> = (props) => {
   const { notificationItems, isEndFetchingNotification, fetchNotification } = useNotification();
 
   return (
     <div className="notification-page flex justify-center py-6">
-      <div className="w-[600px] bg-white rounded-md shadow shadow-slate-250">
+      <div className={`w-[600px] bg-white rounded-md ${props?.isRemoveShadow ? '' : 'shadow shadow-slate-250'}`}>
         <InfiniteScroll
           dataLength={notificationItems?.length || 0}
           next={fetchNotification}

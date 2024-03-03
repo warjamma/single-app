@@ -12,7 +12,7 @@ export const NotificationPopup: React.FC<INotificationPopupProps> = () => {
         Notifications
       </div>
       <div className="divide-y divide-gray-100 dark:divide-gray-700">
-        <NotificationPage />
+        <NotificationPage isRemoveShadow />
       </div>
       <a
         href="/notifications"

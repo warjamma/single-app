@@ -14,7 +14,7 @@ export const useNotification = () => {
   const [paramsNotification, setParamsNotification] = useState<FetchNotificationParams>();
 
   const [isEndFetchingNotification, setIsEndFetchingNotification] = useState(false);
-  
+
   const fetchNotification = useCallback(() => {
     let params: FetchNotificationParams;
 
@@ -32,7 +32,7 @@ export const useNotification = () => {
     setParamsNotification(params);
 
     setIsLoadingNotification(true);
-    fetchNotificationsApi({ pageSize, pageNumber }) 
+    fetchNotificationsApi({ pageSize, pageNumber })
       .then((data) => {
         setNotificationItems(data);
 
