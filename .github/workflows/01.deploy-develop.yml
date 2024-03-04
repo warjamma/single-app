@@ -1,4 +1,4 @@
-name: 03.ssh-development
+name: 01.deploy-develop
 
 on:
   workflow_dispatch:
