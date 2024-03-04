@@ -8,7 +8,7 @@ on:
 env:
   DEPLOYMENT_NAME: cab-client
   IMAGE: cab-client
-  INGRESS_IP: 35.186.147.166
+  INGRESS_IP: api.devcab.org
   DOT_ENV_FILE_NAME: .env.develop
 jobs:
   variables:
