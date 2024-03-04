@@ -1,4 +1,4 @@
-name: 01.build-develop.yml
+name: 01.build-develop
 on:
   workflow_dispatch:
     inputs:
