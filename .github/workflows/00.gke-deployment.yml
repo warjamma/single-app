@@ -19,7 +19,7 @@ env:
   IMAGE: ${{ inputs.IMAGE }}
   INGRESS_IP: ${{ inputs.INGRESS_IP }}
   DOT_ENV_FILE_NAME: ${{ inputs.DOT_ENV_FILE_NAME }}
-  SERVER_IP: "devcab.org"
+  SERVER_IP: "116.118.51.232"
   SERVER_USER: "ubuntu"
 
 jobs:
@@ -77,4 +77,4 @@ jobs:
           sudo ssh -o StrictHostKeyChecking=no $SERVER_USER@$SERVER_IP 'sudo docker kill cab-client-2024'
           sudo ssh -o StrictHostKeyChecking=no $SERVER_USER@$SERVER_IP 'sudo docker rm cab-client-2024'
           sudo ssh -o StrictHostKeyChecking=no $SERVER_USER@$SERVER_IP 'sudo docker pull warjamma/cab-client-2024:latest'
-          sudo ssh -o StrictHostKeyChecking=no $SERVER_USER@$SERVER_IP 'sudo docker run -d -p 3000:80 --name cab-client warjamma/cab-client-2024:latest'
+          sudo ssh -o StrictHostKeyChecking=no $SERVER_USER@$SERVER_IP 'sudo docker run -d -p 3000:80 --name cab-client-2024 warjamma/cab-client-2024:latest'
