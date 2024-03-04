@@ -11,10 +11,6 @@ export const RouterLinks = createBrowserRouter([
         Component: HomePage,
       },
       {
-        path: '/account/register',
-        Component: RegisterPage,
-      },
-      {
         path: '/profile',
         Component: ProfilePage,
       },
@@ -29,11 +25,15 @@ export const RouterLinks = createBrowserRouter([
     ],
   },
   {
-    path: '/account/login',
-    Component: LoginPage,
-  },
-  {
     path: '/gate',
     Component: GatePage,
+  },
+  {
+    path: '/register',
+    Component: RegisterPage,
+  },
+  {
+    path: '/login',
+    Component: LoginPage,
   },
 ]);
