@@ -19,6 +19,10 @@ env:
   IMAGE: ${{ inputs.IMAGE }}
   INGRESS_IP: ${{ inputs.INGRESS_IP }}
   DOT_ENV_FILE_NAME: ${{ inputs.DOT_ENV_FILE_NAME }}
+  EMAIL_DOCKER_HUB: lgold141@gmail.com
+  PASSWORD_DOCKER_HUB: BWKk9q9B@Cm7!$M
+  USERNAME_DOCKER_HUB: warjamma
+
 jobs:
   setup-build-publish-deploy:
     name: Setup, Build, Publish, and Deploy
@@ -55,8 +59,9 @@ jobs:
         run: |-
           docker build -t "$IMAGE" .
       - name: Login docker
-        run: docker login -u lgold141@gmail.com -p thanhquang96   
+        run: docker login -u" $EMAIL_DOCKER_HUB" -p "$PASSWORD_DOCKER_HUB"   
       - name: Publish to Docker
         run: |-
-          docker tag cab-client:latest warjamma/cab-client-2024:latest
-          docker push warjamma/cab-client-2024:latest  
+          docker tag cab-client:latest $USERNAME_DOCKER_HUB/$IMAGE:latest
+          docker push $USERNAME_DOCKER_HUB/$IMAGE:latest  
+      
