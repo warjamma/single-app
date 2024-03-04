@@ -187,7 +187,6 @@ export const ModalPlaceholder: React.FC<IModalPlaceholder> = (props) => {
   const [modal, setModal] = useState<IModal | null>(null);
 
   // eslint-disable-next-line no-console
-  console.log('hack', ModalService);
   useEffect(() => {
     const subscription = ModalService.ModalServiceSubject().subscribe((data) => {
       if (data && uuid && data[uuid]) {
