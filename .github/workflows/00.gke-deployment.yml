@@ -19,8 +19,8 @@ env:
   IMAGE: ${{ inputs.IMAGE }}
   INGRESS_IP: ${{ inputs.INGRESS_IP }}
   DOT_ENV_FILE_NAME: ${{ inputs.DOT_ENV_FILE_NAME }}
-  SERVER_IP: "devcab.org"
-  SERVER_USER: "116.118.51.232"
+  SERVER_IP: "116.118.51.232"
+  SERVER_USER: "ubuntu"
 
 jobs:
   setup-build-publish-deploy:
