@@ -2,8 +2,9 @@ import axios from 'axios';
 import { ApiError } from '.';
 import { logOutAction } from '../store/store-authentication/action';
 import { loginUrlSelector } from '../store/store-authentication/selector';
+import { PUBLIC_API_ENDPOINT } from '../constants/platform';
 
-const API_ENDPOINT = '/api';
+const API_ENDPOINT = PUBLIC_API_ENDPOINT ?? '/api';
 
 const API = axios.create({
   baseURL: `${API_ENDPOINT}`,
