@@ -19,7 +19,7 @@ http {
   proxy_buffers 32 64k;
   proxy_buffer_size 8k;
 
-  log_format main '[\$time_local] \$remote_addr - \$remote_user -'
+  log_format main '[\$time_local] \$remote_addr - \$proxy_add_x_forwarded_for - \$remote_user -'
     '\$server_name to: \$upstream_addr: \$request upstream_response_time'
     '\$upstream_response_time msec \$msec request_time \$request_time';
 

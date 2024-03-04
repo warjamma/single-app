@@ -1,11 +1,12 @@
 import axios from 'axios';
 import { ApiError } from '.';
 import { logOutAction } from '../store/store-authentication/action';
-import { PUBLIC_API_ENDPOINT } from '../constants/platform';
 import { loginUrlSelector } from '../store/store-authentication/selector';
 
+const API_ENDPOINT = '/api';
+
 const API = axios.create({
-  baseURL: `${PUBLIC_API_ENDPOINT}`,
+  baseURL: `${API_ENDPOINT}`,
   headers: {
     'Content-Type': 'application/json;charset=UTF-8',
   },
