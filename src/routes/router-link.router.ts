@@ -1,30 +1,39 @@
 import { createBrowserRouter } from 'react-router-dom';
-import { HomePage, LoginPage, RegisterPage, ProfilePage, GatePage, NotFoundPage } from '../pages';
+import { HomePage, LoginPage, RegisterPage, ProfilePage, GatePage, NotFoundPage, NotificationPage } from '../pages';
+import RootLayout from '../layout.component';
 
-/* your routes here */
 export const RouterLinks = createBrowserRouter([
   {
-    path: '/',
-    Component: HomePage,
+    Component: RootLayout,
+    children: [
+      {
+        path: '/',
+        Component: HomePage,
+      },
+      {
+        path: '/account/register',
+        Component: RegisterPage,
+      },
+      {
+        path: '/profile',
+        Component: ProfilePage,
+      },
+      {
+        path: '/notifications',
+        Component: NotificationPage,
+      },
+      {
+        path: '*',
+        Component: NotFoundPage,
+      },
+    ],
   },
   {
     path: '/account/login',
     Component: LoginPage,
   },
   {
-    path: '/account/register',
-    Component: RegisterPage,
-  },
-  {
-    path: '/profile',
-    Component: ProfilePage,
-  },
-  {
     path: '/gate',
     Component: GatePage,
-  },
-  {
-    path: '*',
-    Component: NotFoundPage,
   },
 ]);

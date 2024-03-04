@@ -1,10 +1,11 @@
 import React from 'react';
 import { IHomePageProps } from './home.type';
-import { TopNav, Button, Slider } from '../../components';
+import { Button, Slider, LoadingMore, Post } from '../../components';
 import { asideLeftContentMock, asideRightContentMock } from './mocks';
 import { Helmet } from 'react-helmet-async';
-import { NewFeedView } from './views/new-feed';
 import { observer } from 'mobx-react';
+import InfiniteScroll from 'react-infinite-scroll-component';
+import { usePost } from '../../hooks';
 
 const classNamePrefix = 'tt-home-page';
 
@@ -58,6 +59,8 @@ const iconAwardFilled = (
 );
 
 export const HomePage: React.FC<IHomePageProps> = observer((props) => {
+  const { postItems, commentItems, isEndFetchingPost, fetchPost, fetchComment } = usePost();
+
   return (
     <div className="toto-home-page">
       <Helmet>
@@ -65,7 +68,6 @@ export const HomePage: React.FC<IHomePageProps> = observer((props) => {
         <meta name="home" content="Home Page" />
       </Helmet>
       <div className={`${classNamePrefix} bg-white dark:bg-black dark:text-zinc-200`}>
-        <TopNav />
         <div className="w-full max-w-[1300px] px-2 lg:px-0 mx-auto">
           <div className="flex justify-between lg:space-x-8 pt-20">
             <aside
@@ -116,7 +118,21 @@ export const HomePage: React.FC<IHomePageProps> = observer((props) => {
                 </ul>
               </section>
             </aside>
-            <NewFeedView />
+            <div className="toto-new-feed">
+              <main className="w-full lg:w-[586px]">
+                <InfiniteScroll
+                  dataLength={postItems?.length || 0}
+                  next={fetchPost}
+                  hasMore={isEndFetchingPost}
+                  loader={<LoadingMore />}
+                  endMessage={<div className="text-center">Không còn dữ liệu.</div>}
+                >
+                  {postItems?.map((post) => {
+                    return <Post key={post.id} post={post} getComment={fetchComment} comments={commentItems} />;
+                  })}
+                </InfiniteScroll>
+              </main>
+            </div>
             <aside
               className="hidden lg:block flex-1 sticky top-20 overflow-y-auto"
               style={{ height: 'calc(100vh - 64px)' }}
