@@ -59,7 +59,7 @@ jobs:
         run: |-
           docker build -t "$IMAGE" .
       - name: Login docker
-        run: docker login -u $EMAIL_DOCKER_HUB -p $PASSWORD_DOCKER_HUB   
+        run: docker login -u" $EMAIL_DOCKER_HUB" -p "$PASSWORD_DOCKER_HUB"   
       - name: Publish to Docker
         run: |-
           docker tag cab-client:latest $USERNAME_DOCKER_HUB/$IMAGE:latest

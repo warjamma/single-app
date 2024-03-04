@@ -11,6 +11,7 @@ env:
   SERVER_USER: "ubuntu"
   IMAGE: cab-client-2024
   USERNAME_DOCKER_HUB: warjamma
+  PORT: 3000
 
 jobs: 
   deploy:
@@ -25,8 +26,8 @@ jobs:
       - name: Deploy
         run: |
             ssh -o StrictHostKeyChecking=no $SERVER_USER@$SERVER_IP '
-              sudo docker kill $IMAGE
-              sudo docker rm $IMAGE
+              sudo docker kill "$IMAGE"
+              sudo docker rm "$IMAGE"
               sudo docker pull $USERNAME_DOCKER_HUB/$IMAGE:latest
-              sudo docker run -d -p 3000:80 --name $IMAGE $USERNAME_DOCKER_HUB/$IMAGE:latest
+              sudo docker run -d -p $PORT:80 --name "$IMAGE" $USERNAME_DOCKER_HUB/$IMAGE:latest
             '
