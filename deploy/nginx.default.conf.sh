@@ -24,7 +24,7 @@ server {
 
   location /api/ {
     proxy_set_header EL-Real-IP \$http_cf_connecting_ip;
-    proxy_pass http://$1/;
+    proxy_pass https://$1/;
   }
 }
 "

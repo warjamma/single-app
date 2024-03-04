@@ -78,7 +78,6 @@
       "last 1 safari version"
     ]
   },
-  "proxy": "https://api.devcab.org",
   "devDependencies": {
     "@babel/plugin-proposal-private-property-in-object": "^7.21.11",
     "@hookform/resolvers": "^3.3.4",
