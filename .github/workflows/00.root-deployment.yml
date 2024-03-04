@@ -19,9 +19,6 @@ env:
   IMAGE: ${{ inputs.IMAGE }}
   INGRESS_IP: ${{ inputs.INGRESS_IP }}
   DOT_ENV_FILE_NAME: ${{ inputs.DOT_ENV_FILE_NAME }}
-  SERVER_IP: "116.118.51.232"
-  SERVER_USER: "ubuntu"
-
 jobs:
   setup-build-publish-deploy:
     name: Setup, Build, Publish, and Deploy
@@ -53,28 +50,13 @@ jobs:
       - name: Generate nginx configuration file setting
         run: ./deploy/nginx.conf.sh > ./nginx/nginx.conf
 
-      # Build the Docker image
-      - name: Build
+      # Build 
+      - name: Build image
         run: |-
           docker build -t "$IMAGE" .
       - name: Login docker
         run: docker login -u lgold141@gmail.com -p thanhquang96   
-
       - name: Publish to Docker
         run: |-
           docker tag cab-client:latest warjamma/cab-client-2024:latest
           docker push warjamma/cab-client-2024:latest  
-
-      - name: Configure SSH
-        run: |
-          mkdir -p ~/.ssh
-          echo "${{ secrets.SSH_PRIVATE_KEY }}" | tr -d '\r' > ~/.ssh/id_rsa
-          chmod 600 ~/.ssh/id_rsa
-          echo "StrictHostKeyChecking no" >> ~/.ssh/config
-
-      - name: Deploy
-        run: |
-          sudo ssh -o StrictHostKeyChecking=no $SERVER_USER@$SERVER_IP 'sudo docker kill cab-client-2024'
-          sudo ssh -o StrictHostKeyChecking=no $SERVER_USER@$SERVER_IP 'sudo docker rm cab-client-2024'
-          sudo ssh -o StrictHostKeyChecking=no $SERVER_USER@$SERVER_IP 'sudo docker pull warjamma/cab-client-2024:latest'
-          sudo ssh -o StrictHostKeyChecking=no $SERVER_USER@$SERVER_IP 'sudo docker run -d -p 3000:80 --name cab-client-2024 warjamma/cab-client-2024:latest'
