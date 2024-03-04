@@ -9,6 +9,8 @@ on:
 env:
   SERVER_IP: "devcab.org"
   SERVER_USER: "ubuntu"
+  IMAGE: cab-client-2024
+  USERNAME_DOCKER_HUB: warjamma
 
 jobs: 
   deploy:
@@ -23,8 +25,8 @@ jobs:
       - name: Deploy
         run: |
             ssh -o StrictHostKeyChecking=no $SERVER_USER@$SERVER_IP '
-              sudo docker kill cab-client-2024
-              sudo docker rm cab-client-2024
-              sudo docker pull warjamma/cab-client-2024:latest
-              sudo docker run -d -p 3000:80 --name cab-client-2024 warjamma/cab-client-2024:latest
+              sudo docker kill $IMAGE
+              sudo docker rm $IMAGE
+              sudo docker pull $USERNAME_DOCKER_HUB/$IMAGE:latest
+              sudo docker run -d -p 3000:80 --name $IMAGE $USERNAME_DOCKER_HUB/$IMAGE:latest
             '
