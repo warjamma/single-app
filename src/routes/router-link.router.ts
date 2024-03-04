@@ -29,11 +29,11 @@ export const RouterLinks = createBrowserRouter([
     Component: GatePage,
   },
   {
-    path: '/register',
+    path: '/account/register',
     Component: RegisterPage,
   },
   {
-    path: '/login',
+    path: '/account/login',
     Component: LoginPage,
   },
 ]);
