@@ -46,4 +46,5 @@ jobs:
         run: |
           rsync -avz -e "ssh -o StrictHostKeyChecking=no" --progress /home/runner/work/cab-client-2024/cab-client-2024/ $SERVER_USER@$SERVER_IP:$SERVER_DEST_PATH
           ssh -o StrictHostKeyChecking=no $SERVER_USER@$SERVER_IP 'sudo systemctl restart cab-client.service' || exit 1
+          ssh -o StrictHostKeyChecking=no $SERVER_USER@$SERVER_IP 'sudo journalctl -xe | grep cab-client.service' || exit 1
           ssh -o StrictHostKeyChecking=no $SERVER_USER@$SERVER_IP 'sudo systemctl status cab-client.service' || exit 1

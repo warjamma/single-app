@@ -3,8 +3,10 @@ import { ApiError } from '.';
 import { logOutAction } from '../store/store-authentication/action';
 import { loginUrlSelector } from '../store/store-authentication/selector';
 
+const API_ENDPOINT = '/api';
+
 const API = axios.create({
-  baseURL: '/',
+  baseURL: `${API_ENDPOINT}`,
   headers: {
     'Content-Type': 'application/json;charset=UTF-8',
   },
