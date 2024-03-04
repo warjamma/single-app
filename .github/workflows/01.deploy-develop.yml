@@ -24,9 +24,9 @@ jobs:
           echo "StrictHostKeyChecking no" >> ~/.ssh/config
       - name: Deploy
         run: |
-            ssh -o StrictHostKeyChecking=no $SERVER_USER@$SERVER_IP '
-              sudo docker kill "$IMAGE"
-              sudo docker rm "$IMAGE"
-              sudo docker pull $USERNAME_DOCKER_HUB/$IMAGE:latest
-              sudo docker run -d -p 3000:80 --name "$IMAGE" $USERNAME_DOCKER_HUB/$IMAGE:latest
-            '
+          ssh -o StrictHostKeyChecking=no $SERVER_USER@$SERVER_IP "
+            sudo docker kill \"$IMAGE\"
+            sudo docker rm \"$IMAGE\"
+            sudo docker pull $USERNAME_DOCKER_HUB/$IMAGE:latest
+            sudo docker run -d -p 3000:80 --name \"$IMAGE\" $USERNAME_DOCKER_HUB/$IMAGE:latest
+          "
