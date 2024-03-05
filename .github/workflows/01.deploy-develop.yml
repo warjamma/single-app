@@ -9,7 +9,7 @@ on:
 env:
   SERVER_IP: "devcab.org"
   SERVER_USER: "ubuntu"
-  IMAGE: cab-client-2024
+  IMAGE: cab-client-dev
   USERNAME_DOCKER_HUB: warjamma
 
 jobs: 
