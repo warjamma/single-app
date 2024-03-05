@@ -22,9 +22,9 @@ server {
     try_files \$uri \$uri/ /index.html =404;
   }
 
-  location /api/ {
-    proxy_set_header EL-Real-IP \$http_cf_connecting_ip;
-    proxy_pass https://$1/;
-  }
+  # location /api/ {
+  #   proxy_set_header EL-Real-IP \$http_cf_connecting_ip;
+  #   proxy_pass https://$1/;
+  # }
 }
 "
